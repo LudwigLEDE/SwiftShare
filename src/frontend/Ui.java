@@ -4,6 +4,8 @@ package src.frontend;
 //Imports
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 //Ui Code
 public class Ui extends JFrame{
@@ -13,6 +15,7 @@ public class Ui extends JFrame{
     //Title Panel
     JPanel Main_Title_Panel = new JPanel();
     JLabel Main_Title_Label = new JLabel();
+    JLabel Main_Title_Logo_Label = new JLabel();
 
     //Friends Panel
     JPanel Main_Friends_Panel = new JPanel();
@@ -39,7 +42,17 @@ public class Ui extends JFrame{
 
         //Logo Icon Erstellen TODO:Ein logo icon für das Window muss noch eingebaut werden
         ImageIcon Logo = new ImageIcon("src/assets/img/Logo.png");
+        Main_Title_Logo_Label.setIcon(Logo);
 
+        //Custom Font Erstellung
+        try {
+            Font Involve = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/font/ttf/Involve-Medium.ttf"));
+            Main_Title_Label.setFont(Involve);
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         //Background
         add(Main_Background_Panel);
@@ -52,12 +65,13 @@ public class Ui extends JFrame{
         Main_Background_Panel.setLayout(new GridLayout(1,2));
         //Logo  TODO: Logo muss noch eingefügt werden
 
+        //Logo zum Panel zuweisung
+        Main_Title_Panel.add(Main_Title_Logo_Label);
+
         //Title TODO: Title muss eingefügt werden mit richtige font
         Main_Title_Panel.add(Main_Title_Label);
+        Main_Title_Label.setForeground(Color.BLACK); //TODO: Muss weiß werden wenn background aktiv ist
         Main_Title_Label.setText("SwiftShare");
-
-        //Logo zum Panel zuweisung
-        Main_Title_Panel.add(Logo);
 
         setVisible(true);
     }
