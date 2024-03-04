@@ -1,4 +1,4 @@
 package src.testumgebung;
 
-public class Empfähnger {
+public class Empfaenger {
 }
