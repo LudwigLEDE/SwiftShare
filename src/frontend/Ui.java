@@ -47,7 +47,7 @@ public class Ui extends JFrame {
         setTitle("Swift Share");
 
         /*
-         * //Logo Icon Erstellen TODO:Ein logo icon für das Window muss noch eingebaut
+         * //Logo Icon Erstellen //TODO:Ein logo icon für das Window muss noch eingebaut
          * werden
          * ImageIcon Logo = new ImageIcon("src/assets/img/Logo.png");
          * Main_Title_Logo_Label.setIcon(Logo);
@@ -73,16 +73,16 @@ public class Ui extends JFrame {
         Main_Content_Panel.setLayout(new GridBagLayout());
 
         /*
-         * TODO: Muss weider eingeführt werden
+         * //TODO: Muss weider eingeführt werden
          * 
-         * //Title Panel TODO: Title Panel muss erstellt werden
+         * //Title Panel //TODO: Title Panel muss erstellt werden
          * Main_Background_Panel.add(Main_Title_Panel);
          * Main_Background_Panel.setLayout(new GridLayout(1,2));
          * 
          * //Logo zum Panel zuweisung
          * Main_Title_Panel.add(Main_Title_Logo_Label);
          * 
-         * //Title TODO: Title muss eingefügt werden mit richtige font
+         * //Title //TODO: Title muss eingefügt werden mit richtige font
          * Main_Title_Panel.add(Main_Title_Label);
          * Main_Title_Label.setForeground(Color.BLACK); //TODO: Muss weiß werden wenn
          * background aktiv ist
