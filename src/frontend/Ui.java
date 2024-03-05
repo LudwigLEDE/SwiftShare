@@ -1,109 +1,124 @@
-//Packages
 package src.frontend;
 
-//Imports
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.JScrollPane;
 import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
 
-//Ui Code
 public class Ui extends JFrame {
-    // Components erstellung
-    JPanel Main_Background_Panel = new JPanel();
-    JPanel Main_Content_Panel = new JPanel();
 
-    // Title Panel
+    // Components
+    JPanel Main_Background_Panel = new JPanel();
+    JPanel Main_Content_Panel = new JPanel(new GridBagLayout());
     JPanel Main_Title_Panel = new JPanel();
-    JLabel Main_Title_Label = new JLabel();
+    JLabel Main_Title_Label = new JLabel("SwiftShare");
     JLabel Main_Title_Logo_Label = new JLabel();
 
-    // Friends Panel
-    JPanel Main_Friends_Panel = new JPanel();
-    JLabel Main_Friends_Label = new JLabel();
-    JButton Main_Friends_Add_Button = new JButton();
+    JPanel Main_Friends_Panel = new JPanel(new GridBagLayout());
+    JLabel Main_Friends_Label = new JLabel("User List");
+    JButton Main_Friends_Add_Button = new JButton("Add");
     JTable Main_Friends_Table = new JTable();
 
-    // Files Panel
-    JPanel Main_Files_Panel = new JPanel();
-    JLabel Main_Files_Label = new JLabel();
-    JButton Main_Files_Clear_Button = new JButton();
-    JButton Main_Files_Add_Button = new JButton();
+    JPanel Main_Files_Panel = new JPanel(new GridBagLayout());
+    JLabel Main_Files_Label = new JLabel("Selected Files");
+    JButton Main_Files_Clear_Button = new JButton("Clear");
+    JButton Main_Files_Add_Button = new JButton("Add");
     JTable Main_Files_SelectedFiles_Table = new JTable();
 
-    // Main Buttons
-    JButton Main_Setting_Button = new JButton();
-    JButton Main_SendFile_Button = new JButton();
+    JButton Main_Setting_Button = new JButton("Settings");
+    JButton Main_SendFile_Button = new JButton("Send Files");
 
     public Ui() {
-
-        // Frame Settings
-        setSize(1280, 960);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(800, 600);
         setTitle("Swift Share");
 
-        /*
-         * //Logo Icon Erstellen //TODO:Ein logo icon für das Window muss noch eingebaut
-         * werden
-         * ImageIcon Logo = new ImageIcon("src/assets/img/Logo.png");
-         * Main_Title_Logo_Label.setIcon(Logo);
-         * 
-         * //Custom Font Erstellung
-         * try {
-         * Font Involve = Font.createFont(Font.TRUETYPE_FONT, new
-         * File("src/assets/font/ttf/Involve-Medium.ttf"));
-         * Main_Title_Label.setFont(Involve);
-         * } catch (FontFormatException e) {
-         * throw new RuntimeException(e);
-         * } catch (IOException e) {
-         * throw new RuntimeException(e);
-         * }
-         */
+        // Layout for the main content panel
+        Main_Background_Panel.setLayout(new BorderLayout());
+        Main_Background_Panel.add(Main_Content_Panel, BorderLayout.CENTER);
 
-        // Background
-        add(Main_Background_Panel);
+        // GridBag constraints for the components
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        // Adding the Title Panel
+        Main_Title_Panel.add(Main_Title_Label);
+        Main_Background_Panel.add(Main_Title_Panel, BorderLayout.NORTH);
+
+        // Adding the Files Panel
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.5;
+        gbc.weighty = 1.0;
+        Main_Files_Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        Main_Content_Panel.add(Main_Files_Panel, gbc);
+
+        // Adding components to the Files Panel
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.5;
+        gbc.weighty = 0;
+        Main_Files_Panel.add(Main_Files_Label, gbc);
+        Main_Files_Panel.add(Main_Files_Add_Button, gbc);
+        Main_Files_Panel.add(Main_Files_Clear_Button, gbc);
+        JScrollPane filesScrollPane = new JScrollPane(Main_Files_SelectedFiles_Table);
+        gbc.gridy = 1;
+        gbc.weighty = 1.0;
+        Main_Files_Panel.add(filesScrollPane, gbc);
+
+        // Adding the Friends Panel
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.5;
+        gbc.weighty = 1.0;
+        Main_Friends_Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        Main_Content_Panel.add(Main_Friends_Panel, gbc);
+
+        // Adding components to the Friends Panel
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.5;
+        gbc.weighty = 0;
+        Main_Friends_Panel.add(Main_Friends_Label, gbc);
+        Main_Friends_Panel.add(Main_Friends_Add_Button, gbc);
+        JScrollPane friendsScrollPane = new JScrollPane(Main_Friends_Table);
+        gbc.gridy = 1;
+        gbc.weighty = 1.0;
+        Main_Friends_Panel.add(friendsScrollPane, gbc);
+
+        // Adding the Send Files Button
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0;
+        Main_Content_Panel.add(Main_SendFile_Button, gbc);
+
+        // Adding the Settings Button
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.LAST_LINE_END;
+        Main_Content_Panel.add(Main_Setting_Button, gbc);
+
+        // Background Panel Settings
         Main_Background_Panel.setBackground(new Color(51, 51, 153));
         Main_Background_Panel.setOpaque(true);
+        add(Main_Background_Panel);
 
-        Main_Background_Panel.add(Main_Content_Panel);
-        Main_Content_Panel.setLayout(new GridBagLayout());
-
-        /*
-         * //TODO: Muss weider eingeführt werden
-         * 
-         * //Title Panel //TODO: Title Panel muss erstellt werden
-         * Main_Background_Panel.add(Main_Title_Panel);
-         * Main_Background_Panel.setLayout(new GridLayout(1,2));
-         * 
-         * //Logo zum Panel zuweisung
-         * Main_Title_Panel.add(Main_Title_Logo_Label);
-         * 
-         * //Title //TODO: Title muss eingefügt werden mit richtige font
-         * Main_Title_Panel.add(Main_Title_Label);
-         * Main_Title_Label.setForeground(Color.BLACK); //TODO: Muss weiß werden wenn
-         * background aktiv ist
-         * Main_Title_Label.setText("SwiftShare");
-         */
-
-        // File Select Panel
-        Main_Files_Panel.setLayout(new GridBagLayout());
-        Main_Files_Panel.add(Main_Files_Label);
-        Main_Files_Panel.add(Main_Files_Add_Button);
-        Main_Files_Panel.add(Main_Files_Clear_Button);
-        Main_Files_Panel.add(Main_Files_SelectedFiles_Table);
-        Main_Content_Panel.add(Main_Files_Panel);
-
-        // Friend List
-        Main_Friends_Panel.setLayout(new GridBagLayout());
-        Main_Friends_Panel.add(Main_Friends_Label);
-        Main_Friends_Panel.add(Main_Friends_Add_Button);
-        Main_Friends_Panel.add(Main_Friends_Table);
-        Main_Content_Panel.add(Main_Friends_Panel);
-
+        // Set the frame to be visible
+        pack();
         setVisible(true);
     }
 }
