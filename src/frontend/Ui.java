@@ -16,6 +16,7 @@ import java.io.IOException;
 public class Ui extends JFrame {
     // Components erstellung
     JPanel Main_Background_Panel = new JPanel();
+    JPanel Main_Content_Panel = new JPanel();
 
     // Title Panel
     JPanel Main_Title_Panel = new JPanel();
@@ -65,9 +66,11 @@ public class Ui extends JFrame {
 
         // Background
         add(Main_Background_Panel);
-        Main_Background_Panel.setLayout(new GridBagLayout());
         Main_Background_Panel.setBackground(new Color(51, 51, 153));
         Main_Background_Panel.setOpaque(true);
+
+        Main_Background_Panel.add(Main_Content_Panel);
+        Main_Content_Panel.setLayout(new GridBagLayout());
 
         /*
          * TODO: Muss weider eingeführt werden
@@ -92,14 +95,14 @@ public class Ui extends JFrame {
         Main_Files_Panel.add(Main_Files_Add_Button);
         Main_Files_Panel.add(Main_Files_Clear_Button);
         Main_Files_Panel.add(Main_Files_SelectedFiles_Table);
-        add(Main_Files_Panel);
+        Main_Content_Panel.add(Main_Files_Panel);
 
         // Friend List
         Main_Friends_Panel.setLayout(new GridBagLayout());
         Main_Friends_Panel.add(Main_Friends_Label);
         Main_Friends_Panel.add(Main_Friends_Add_Button);
         Main_Friends_Panel.add(Main_Friends_Table);
-        add(Main_Friends_Panel);
+        Main_Content_Panel.add(Main_Friends_Panel);
 
         setVisible(true);
     }
