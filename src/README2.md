@@ -7,3 +7,5 @@ Für Ludwig
 5. Datei mithilfe von BufferedInput und BufferedOutput lesen und schreiben um sie zu als Daten zu verschicken
 6. Guck mal bitte unten in die JFilchooser Klasse, da habe ich die Lösung für ein funktionierenden JFileChooser reingeschickt, mach damit, was du machen musst
 7. Der FileHandler ist dafür da, Files zu erhalten und diese zu lesen
+8. Ich habe einige Neue Klassen reingeschrieben aber die Beschreibung leider vergessen zu erneuern haha
+9. Peer Ist jeweils der Benutzer und oder Empfänger und SenderServer quasi der "Server" der entsteht, wenn man selber an das Programm geht für die Verbindung untereinander.
