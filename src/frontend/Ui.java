@@ -15,8 +15,11 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.awt.Color;
+import java.awt.Dimension;
 
 public class Ui extends JFrame {
 
@@ -49,6 +52,12 @@ public class Ui extends JFrame {
         setSize(1280, 960);
         setTitle("Swift Share");
 
+        // Dimensions for components
+        Dimension button_Panal = new Dimension(120, 30);
+
+        // Color of the panel and buttons / components
+        Color SendFile_Button = new Color(100, 149, 237);
+
         // ActionListener
         Main_Files_Add_Button.addActionListener(new ActionListener() {
             @Override
@@ -74,6 +83,21 @@ public class Ui extends JFrame {
                 }
             }
         });
+
+        // Hover Effects on Buttons
+        JButton[] buttons = { Main_Friends_Add_Button, Main_Files_Add_Button, Main_Files_Clear_Button,
+                Main_SendFile_Button, Main_Setting_Button };
+        for (JButton button : buttons) {
+            button.addMouseListener((MouseListener) new MouseAdapter() {
+                public void mouseEntered(MouseEvent evt) {
+                    button.setBackground(buttonColor.darker()); // Darker on hover
+                }
+
+                public void mouseExited(MouseEvent evt) {
+                    button.setBackground(buttonColor); // Revert to original
+                }
+            });
+        }
 
         // Layout for the main content panel
         Main_Background_Panel.setLayout(new BorderLayout());
@@ -130,13 +154,12 @@ public class Ui extends JFrame {
         Main_Friends_Panel.add(friendsScrollPane, gbc);
 
         // Adding the Send Files Button
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        gbc.weighty = 0;
-        Main_Content_Panel.add(Main_SendFile_Button, gbc);
+
+        gbc.gridx = 0; // Position X
+        gbc.gridy = GridBagConstraints.RELATIVE; // Position Y, relative positioning for bottom
+        gbc.gridwidth = 1;
+        gbc.anchor = GridBagConstraints.LINE_START; // Anchor to start of line (left side)
+        Main_Content_Panel.add(Main_Setting_Button, gbc);
 
         // Adding the Settings Button
         gbc.gridx = 1;
