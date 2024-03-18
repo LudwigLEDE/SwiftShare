@@ -33,12 +33,13 @@ public class Ui extends JFrame {
     JButton Main_Files_Add_Button = new JButton("Add");
     JTable Main_Files_SelectedFiles_Table = new JTable();
 
+    JPanel Main_Button_Panel = new JPanel();
     JButton Main_Setting_Button = new JButton("Settings");
     JButton Main_SendFile_Button = new JButton("Send Files");
 
     public Ui() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1280, 960);
         setTitle("Swift Share");
 
         // Layout for the main content panel
