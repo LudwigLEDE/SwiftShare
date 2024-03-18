@@ -4,35 +4,41 @@ import java.io.*;
 import java.net.Socket;
 
 public class Peer {
-    //String serverIP = "die aktuelle ServerIP";
-    //int serverPort = 12345;
-    private static String filepath;
     public static void main(String[] args) {
+        // Server's IP address and port
+        String serverIP = "127.0.0.1"; // Change to the actual server's IP address
+        int serverPort = 12345; // Change to the actual server's port
+
         try {
-            Socket socket = new Socket("localhost", 12345); // Connect to the server, Port needs to change to our
-            // Implement file sharing logic here
+            // Connect to the server
+            Socket socket = new Socket(serverIP, serverPort);
 
-            System.out.println("Connected to file owner in port 12345");
-            // Two Streams, that read and write received Data from the socket
-            DataInputStream in_so = new DataInputStream(socket.getInputStream());
-            DataOutputStream out_so = new DataOutputStream(socket.getOutputStream());
+            // Create input and output streams for communication
+            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-            boolean connected = false;
+            // File to share
+            File fileToSend = new File("file_to_share.txt");
 
+            // Send file name and size to the server
+            dataOutputStream.writeUTF(fileToSend.getName());
+            dataOutputStream.writeLong(fileToSend.length());
 
-            /*try{
-                while(true){
-                    try{
-                        if(!connected){
-                            new FileHandler(socket).run();
-                            connected = true;
-                        }
-                        new
-                    }
+            // Open file input stream and send file content to the server
+            try (FileInputStream fileInputStream = new FileInputStream(fileToSend)) {
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+                    dataOutputStream.write(buffer, 0, bytesRead);
                 }
-            }*/
+                System.out.println("File sent successfully!");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        } catch (Exception e) {
+            // Close the connection
+            socket.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
