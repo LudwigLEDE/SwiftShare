@@ -5,12 +5,17 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 import java.awt.GridBagLayout;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.Color;
 
 public class Ui extends JFrame {
@@ -31,15 +36,44 @@ public class Ui extends JFrame {
     JLabel Main_Files_Label = new JLabel("Selected Files");
     JButton Main_Files_Clear_Button = new JButton("Clear");
     JButton Main_Files_Add_Button = new JButton("Add");
-    JTable Main_Files_SelectedFiles_Table = new JTable();
+    DefaultTableModel filesTableModel = new DefaultTableModel(new Object[] { "File Name", "Path" }, 0);
+    JTable Main_Files_SelectedFiles_Table = new JTable(filesTableModel);
 
+    JPanel Main_Button_Panel = new JPanel();
     JButton Main_Setting_Button = new JButton("Settings");
     JButton Main_SendFile_Button = new JButton("Send Files");
 
     public Ui() {
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1280, 960);
         setTitle("Swift Share");
+
+        // ActionListener
+        Main_Files_Add_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setMultiSelectionEnabled(true); // Enable multiple file selection
+
+                // Show the file chooser dialog
+                int result = fileChooser.showOpenDialog(null); // Use 'null' or 'Ui.this' as the parent
+
+                // Process the result
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    // User selected files
+                    File[] selectedFiles = fileChooser.getSelectedFiles();
+                    for (File file : selectedFiles) {
+                        // Add file details to the table model
+                        ((DefaultTableModel) Main_Files_SelectedFiles_Table.getModel())
+                                .addRow(new Object[] { file.getName(), file.getAbsolutePath() });
+                    }
+                } else {
+                    // User cancelled or an error occurred
+                    System.out.println("File selection cancelled or an error occurred.");
+                }
+            }
+        });
 
         // Layout for the main content panel
         Main_Background_Panel.setLayout(new BorderLayout());
