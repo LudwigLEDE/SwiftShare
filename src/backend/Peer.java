@@ -1,13 +1,16 @@
 package src.backend;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Peer {
-    public static void main(String[] args) {
-        // Server's IP address and port
-        String serverIP = "127.0.0.1"; // Change to the actual server's IP address
-        int serverPort = 12345; // Change to the actual server's port
+    public static void main(String[] args) throws UnknownHostException {
+        // Get the IP address of the file owner's machine
+        InetAddress fileOwnerIPAddress = InetAddress.getLocalHost();
+        String serverIP = fileOwnerIPAddress.getHostAddress();
+        int serverPort = 12345; // Replace with the file owner's server port
 
         try {
             // Connect to the server
