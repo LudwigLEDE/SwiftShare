@@ -142,6 +142,20 @@ public class Ui extends JFrame {
             }
         });
 
+        Main_Setting_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        Main_SendFile_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
 /*
         // Hover Effects on Buttons
         JButton[] buttons = { Main_Friends_Add_Button, Main_Files_Add_Button, Main_Files_Clear_Button,
@@ -220,7 +234,7 @@ public class Ui extends JFrame {
 
         // Adding the Send Files Button
         gbc.gridx = 0; // Position X
-        gbc.gridy = GridBagConstraints.RELATIVE; // Position Y, relative positioning for bottom
+        gbc.gridy =3;
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.LINE_START; // Anchor to start of line (left side)
         Main_Content_Panel.add(Main_Setting_Button, gbc);
@@ -229,9 +243,8 @@ public class Ui extends JFrame {
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.LAST_LINE_END;
-        Main_Content_Panel.add(Main_Setting_Button, gbc);
+        Main_Content_Panel.add(Main_SendFile_Button, gbc);
 
         // Background Panel Settings
         Main_Background_Panel.setBackground(new Color(51, 51, 153));
