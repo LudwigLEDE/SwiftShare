@@ -9,17 +9,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
-import java.awt.GridBagLayout;
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.awt.Color;
-import java.awt.Dimension;
 
 public class Ui extends JFrame {
 
@@ -38,6 +33,7 @@ public class Ui extends JFrame {
     JPanel Main_Files_Panel = new JPanel(new GridBagLayout());
     JLabel Main_Files_Label = new JLabel("Selected Files");
     JButton Main_Files_Clear_Button = new JButton("Clear");
+    JButton Main_Files_Delete_Button = new JButton("Delete");
     JButton Main_Files_Add_Button = new JButton("Add");
     DefaultTableModel filesTableModel = new DefaultTableModel(new Object[] { "File Name", "Path" }, 0);
     JTable Main_Files_SelectedFiles_Table = new JTable(filesTableModel);
@@ -83,7 +79,7 @@ public class Ui extends JFrame {
                 }
             }
         });
-
+/*
         // Hover Effects on Buttons
         JButton[] buttons = { Main_Friends_Add_Button, Main_Files_Add_Button, Main_Files_Clear_Button,
                 Main_SendFile_Button, Main_Setting_Button };
@@ -98,7 +94,7 @@ public class Ui extends JFrame {
                 }
             });
         }
-
+*/
         // Layout for the main content panel
         Main_Background_Panel.setLayout(new BorderLayout());
         Main_Background_Panel.add(Main_Content_Panel, BorderLayout.CENTER);
@@ -122,16 +118,18 @@ public class Ui extends JFrame {
         Main_Content_Panel.add(Main_Files_Panel, gbc);
 
         // Adding components to the Files Panel
-        gbc.gridwidth = 1;
-        gbc.weightx = 0.5;
-        gbc.weighty = 0;
-        Main_Files_Panel.add(Main_Files_Label, gbc);
-        Main_Files_Panel.add(Main_Files_Add_Button, gbc);
-        Main_Files_Panel.add(Main_Files_Clear_Button, gbc);
+        GridBagConstraints fpg = new GridBagConstraints();
+        fpg.gridy = 0;
+        fpg.gridwidth = 3;
+        Main_Files_Panel.add(Main_Files_Label,fpg);
+        fpg.gridy = 1;
+        Main_Files_Panel.add(Main_Files_Add_Button,fpg);
+        Main_Files_Panel.add(Main_Files_Delete_Button,fpg);
+        Main_Files_Panel.add(Main_Files_Clear_Button,fpg);
+        fpg.gridy = 2;
+        fpg.gridwidth = 3;
         JScrollPane filesScrollPane = new JScrollPane(Main_Files_SelectedFiles_Table);
-        gbc.gridy = 1;
-        gbc.weighty = 1.0;
-        Main_Files_Panel.add(filesScrollPane, gbc);
+        Main_Files_Panel.add(filesScrollPane,fpg);
 
         // Adding the Friends Panel
         gbc.gridx = 1;
