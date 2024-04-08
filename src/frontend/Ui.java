@@ -1,24 +1,9 @@
 package src.frontend;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Dimension;
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 
 public class Ui extends JFrame {
@@ -33,7 +18,9 @@ public class Ui extends JFrame {
     JPanel Main_Friends_Panel = new JPanel(new GridBagLayout());
     JLabel Main_Friends_Label = new JLabel("User List");
     JButton Main_Friends_Add_Button = new JButton("Add");
-    JTable Main_Friends_Table = new JTable();
+    JButton Main_Friends_Remove_Button = new JButton("Remove");
+    DefaultTableModel friendsTableModel = new DefaultTableModel(new Object[]{"Name", "IP Address"},0);
+    JTable Main_Friends_Table = new JTable(friendsTableModel);
 
     JPanel Main_Files_Panel = new JPanel(new GridBagLayout());
     JLabel Main_Files_Label = new JLabel("Selected Files");
@@ -84,6 +71,77 @@ public class Ui extends JFrame {
                 }
             }
         });
+        Main_Files_Delete_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        Main_Files_Clear_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        Main_Friends_Add_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialog dialog = new JDialog(new JFrame(), "Add Friend", true); // Parent frame can be null or your main application frame
+                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
+
+                // Components
+                JLabel add_Friend_Name_Label = new JLabel("Name");
+                JTextField add_Friend_Name_TextField = new JTextField(10);
+                JLabel add_Friend_IP_Label = new JLabel("IP Address");
+                JTextField add_Friend_IP_TextField = new JTextField(10);
+                JButton add_Friend_Confirm = new JButton("Confirm");
+
+                // Confirm button action
+                add_Friend_Confirm.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            String Friend_Name = add_Friend_Name_TextField.getText().trim();
+                            String Friend_IP = add_Friend_IP_TextField.getText().trim();
+
+                            if(Friend_Name.isEmpty() || Friend_IP.isEmpty()) {
+                                throw new IllegalArgumentException("Both fields must be filled.");
+                            }
+
+                            // Add to table model
+                            friendsTableModel.addRow(new Object[]{Friend_Name, Friend_IP});
+
+                            System.out.println("Input 1 / Name: " + Friend_Name);
+                            System.out.println("Input 2 / IP Address: " + Friend_IP);
+
+                            dialog.dispose(); // Close the dialog
+                        } catch(IllegalArgumentException ex) {
+                            JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
+
+                // Add components to dialog
+                dialog.add(add_Friend_Name_Label);
+                dialog.add(add_Friend_Name_TextField);
+                dialog.add(add_Friend_IP_Label);
+                dialog.add(add_Friend_IP_TextField);
+                dialog.add(add_Friend_Confirm);
+
+                // Finalize dialog
+                dialog.pack();
+                dialog.setLocationRelativeTo(null); // Center on screen
+                dialog.setVisible(true);
+            }
+        });
+
+        Main_Friends_Remove_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
 /*
         // Hover Effects on Buttons
         JButton[] buttons = { Main_Friends_Add_Button, Main_Files_Add_Button, Main_Files_Clear_Button,
@@ -146,18 +204,21 @@ public class Ui extends JFrame {
         Main_Content_Panel.add(Main_Friends_Panel, gbc);
 
         // Adding components to the Friends Panel
-        gbc.gridwidth = 1;
-        gbc.weightx = 0.5;
-        gbc.weighty = 0;
-        Main_Friends_Panel.add(Main_Friends_Label, gbc);
-        Main_Friends_Panel.add(Main_Friends_Add_Button, gbc);
+        GridBagConstraints frpg = new GridBagConstraints();
+        frpg.gridwidth = 1;
+        frpg.weightx = 0.5;
+        frpg.weighty = 0;
+        frpg.gridy = 0;
+        Main_Friends_Panel.add(Main_Friends_Label, frpg);
+        frpg.gridy = 1;
+        Main_Friends_Panel.add(Main_Friends_Add_Button, frpg);
+        Main_Friends_Panel.add(Main_Friends_Remove_Button, frpg);
         JScrollPane friendsScrollPane = new JScrollPane(Main_Friends_Table);
-        gbc.gridy = 1;
-        gbc.weighty = 1.0;
-        Main_Friends_Panel.add(friendsScrollPane, gbc);
+        frpg.gridy = 2;
+        frpg.weighty = 1.0;
+        Main_Friends_Panel.add(friendsScrollPane, frpg);
 
         // Adding the Send Files Button
-
         gbc.gridx = 0; // Position X
         gbc.gridy = GridBagConstraints.RELATIVE; // Position Y, relative positioning for bottom
         gbc.gridwidth = 1;
