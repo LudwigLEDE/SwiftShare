@@ -65,6 +65,7 @@ public class Ui extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280, 960);
         setTitle("Swift Share");
+        setResizable(false);
 
         // ActionListener
         Main_Files_Add_Button.addActionListener(new ActionListener() {
@@ -94,20 +95,31 @@ public class Ui extends JFrame {
         Main_Files_Delete_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Get the selected row index
+                int selectedRow = Main_Files_SelectedFiles_Table.getSelectedRow();
 
+                // Check if a row is actually selected
+                if (selectedRow != -1) {
+                    // Remove selected row from the model
+                    filesTableModel.removeRow(selectedRow);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please select a file to delete.");
+                }
             }
         });
+
         Main_Files_Clear_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                // Remove all rows from the model
+                filesTableModel.setRowCount(0);
             }
         });
+
         Main_Friends_Add_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog(new JFrame(), "Add Friend", true); // Parent frame can be null or your main
-                                                                                // application frame
+                JDialog dialog = new JDialog(new JFrame(), "Add Friend", true);
                 dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                 dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
 
@@ -115,8 +127,26 @@ public class Ui extends JFrame {
                 JLabel add_Friend_Name_Label = new JLabel("Name");
                 JTextField add_Friend_Name_TextField = new JTextField(10);
                 JLabel add_Friend_IP_Label = new JLabel("IP Address");
-                JTextField add_Friend_IP_TextField = new JTextField(10);
+                JTextField add_Friend_IP_TextField = new JTextField("e.g., 192.168.1.1", 10);
+                add_Friend_IP_TextField.setForeground(Color.GRAY);
                 JButton add_Friend_Confirm = new JButton("Confirm");
+
+                // Placeholder logic for IP Address
+                add_Friend_IP_TextField.addFocusListener(new FocusAdapter() {
+                    public void focusGained(FocusEvent e) {
+                        if (add_Friend_IP_TextField.getText().equals("e.g., 192.168.1.1")) {
+                            add_Friend_IP_TextField.setText("");
+                            add_Friend_IP_TextField.setForeground(Color.BLACK);
+                        }
+                    }
+
+                    public void focusLost(FocusEvent e) {
+                        if (add_Friend_IP_TextField.getText().isEmpty()) {
+                            add_Friend_IP_TextField.setForeground(Color.GRAY);
+                            add_Friend_IP_TextField.setText("e.g., 192.168.1.1");
+                        }
+                    }
+                });
 
                 // Confirm button action
                 add_Friend_Confirm.addActionListener(new ActionListener() {
@@ -127,6 +157,10 @@ public class Ui extends JFrame {
 
                             if (Friend_Name.isEmpty() || Friend_IP.isEmpty()) {
                                 throw new IllegalArgumentException("Both fields must be filled.");
+                            }
+
+                            if (!Friend_IP.matches("^([0-9]{1,3}\\.){3}[0-9]{1,3}$")) {
+                                throw new IllegalArgumentException("Invalid IP format.");
                             }
 
                             // Add to table model
@@ -159,7 +193,16 @@ public class Ui extends JFrame {
         Main_Friends_Remove_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Get the selected row index
+                int selectedRow = Main_Friends_Table.getSelectedRow();
 
+                // Check if a row is actually selected
+                if (selectedRow != -1) {
+                    // Remove selected row from the model
+                    friendsTableModel.removeRow(selectedRow);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please select a friend to remove.");
+                }
             }
         });
 
