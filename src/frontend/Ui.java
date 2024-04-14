@@ -67,6 +67,9 @@ public class Ui extends JFrame {
         setTitle("Swift Share");
         setResizable(false);
 
+        // Color Setup
+        Main_Content_Panel.setBackground(BACKGROUND);
+
         // ActionListener
         Main_Files_Add_Button.addActionListener(new ActionListener() {
             @Override
