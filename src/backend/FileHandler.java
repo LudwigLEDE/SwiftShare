@@ -10,7 +10,8 @@ public class FileHandler implements Runnable {
     }
 
     public void run() {
-        try (
+        try {
+            /*(
                 // Creating input and output streams for communication
                 DataInputStream dataInputStream = new DataInputStream(clientSocket.getInputStream());
                 DataOutputStream dataOutputStream = new DataOutputStream(clientSocket.getOutputStream())
@@ -18,7 +19,12 @@ public class FileHandler implements Runnable {
             // Receive the file name and size from the client
             String fileName = dataInputStream.readUTF();
             long fileSize = dataInputStream.readLong();
+*/
 
+            // Receive file from client
+            InputStream is = clientSocket.getInputStream();
+
+            String fileName = "received_file";
             System.out.println("FileHandler: Receiving File: " + fileName);
 
             // Create a file output stream to write the received file
@@ -28,9 +34,8 @@ public class FileHandler implements Runnable {
                 byte[] buffer = new byte[4096];
                 int bytesRead;
 
-                while (fileSize > 0 && (bytesRead = dataInputStream.read(buffer, 0, (int) Math.min(buffer.length, fileSize))) != -1) {
+                while ((bytesRead = is.read(buffer)) != -1) {
                     fileOutputStream.write(buffer, 0, bytesRead);
-                    fileSize -= bytesRead;
                 }
 
                 System.out.println("FileHandler: File received successfully!");

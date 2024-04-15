@@ -23,9 +23,10 @@ public class SenderServer { // FileOwnerServer
             System.out.println("SenderServer: File owner's server is running on port " + SERVER_PORT );
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                // Handle each connection in a new thread
-                new Thread(new FileHandler(clientSocket)).start();
                 System.out.println(" SenderServer: Die Connection ist hergestellt");
+                // Handle each connection in a new thread
+                Thread clientThread = new Thread(new FileHandler(clientSocket));
+                clientThread.start();
             }
         } catch (Exception e) {
             e.printStackTrace();
