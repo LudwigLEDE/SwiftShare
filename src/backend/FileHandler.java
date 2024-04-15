@@ -19,7 +19,7 @@ public class FileHandler implements Runnable {
             String fileName = dataInputStream.readUTF();
             long fileSize = dataInputStream.readLong();
 
-            System.out.println("Receiving File: " + fileName);
+            System.out.println("FileHandler: Receiving File: " + fileName);
 
             // Create a file output stream to write the received file
             File file = new File("received_" + fileName);
@@ -33,7 +33,7 @@ public class FileHandler implements Runnable {
                     fileSize -= bytesRead;
                 }
 
-                System.out.println("File received successfully!");
+                System.out.println("FileHandler: File received successfully!");
             }
         } catch (IOException e) {
             e.printStackTrace();
