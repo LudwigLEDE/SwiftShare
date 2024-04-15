@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
 
 public class Ui extends JFrame {
 
@@ -39,7 +40,7 @@ public class Ui extends JFrame {
     JFileChooser fileChooser = new JFileChooser();
 
     // Colors Preset
-    public static final Color BLANK = new Color(0,0,0,0);
+    public static final Color BLANK = new Color(0, 0, 0, 0);
     public static final Color PRIMARY = new Color(1, 116, 228);
     public static final Color BACKGROUND = new Color(0x131364);
     public static final Color FOREGROUND = new Color(0xFFFFFF);
@@ -53,9 +54,20 @@ public class Ui extends JFrame {
         setTitle("Swift Share");
         setResizable(false);
 
-        // Color Setup
-        Main_Content_Panel.setBackground(BACKGROUND);
+        // Font Setup
+        try {
+            // Load the custom font from a file
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/font/ttf/Involve-Regular.ttf"));
+            font = font.deriveFont(24f); // Set font size to 24 pixels
+            Main_Title_Label.setFont(font);
+        } catch (FontFormatException e) {
+            System.err.println("UI:Invalid font format.");
+        } catch (IOException e) {
+            System.err.println("UI:Could not read the font file.");
+        }
 
+        // Icon Setup
+        Main_Title_Logo_Label.setIcon(new ImageIcon("src/assets/img/Logo286px.png"));
         // ActionListener
         Main_Files_Add_Button.addActionListener(new ActionListener() {
             @Override
@@ -159,7 +171,8 @@ public class Ui extends JFrame {
 
                             dialog.dispose(); // Close the dialog
                         } catch (IllegalArgumentException ex) {
-                            JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Ui: Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Ui: Error",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 });
@@ -205,21 +218,21 @@ public class Ui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    File[] selectedFiles = fileChooser.getSelectedFiles(); // Adjust this method to return File[] if not already
+                    File[] selectedFiles = fileChooser.getSelectedFiles(); // Adjust this method to return File[] if not
+                                                                           // already
                     if (selectedFiles.length == 0) {
                         System.out.println("Ui: No files selected to send.");
                         return; // Exit if no files are selected
                     }
                     Peer peer = new Peer(); // Assume Peer can handle the files
                     peer.setSelectedFile(selectedFiles);
-                    peer.sendFile(getSelectedFriendIP(),50000);
+                    peer.sendFile(getSelectedFriendIP(), 50000);
                 } catch (Exception ex) {
                     System.out.println("Ui: Error sending files: " + ex.getMessage());
                     ex.printStackTrace();
                 }
             }
         });
-
 
         /*
          * // Hover Effects on Buttons
@@ -248,6 +261,7 @@ public class Ui extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
 
         // Adding the Title Panel
+        Main_Title_Panel.add(Main_Title_Logo_Label);
         Main_Title_Panel.add(Main_Title_Label);
         Main_Background_Panel.add(Main_Title_Panel, BorderLayout.NORTH);
 
@@ -318,7 +332,7 @@ public class Ui extends JFrame {
         Main_Background_Panel.setOpaque(true);
         add(Main_Background_Panel);
 
-        //Color changes to the Components
+        // Color changes to the Components
         Main_Background_Panel.setBackground(BACKGROUND);
         Main_Title_Panel.setBackground(BLANK);
         Main_Content_Panel.setBackground(BLANK);
@@ -329,6 +343,7 @@ public class Ui extends JFrame {
         pack();
         setVisible(true);
     }
+
     public String getSelectedFriendIP() {
         int selectedRow = Main_Friends_Table.getSelectedRow();
         if (selectedRow != -1) {
