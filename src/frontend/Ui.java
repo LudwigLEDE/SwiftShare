@@ -3,6 +3,7 @@ package src.frontend;
 import src.backend.Peer;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -38,30 +39,12 @@ public class Ui extends JFrame {
     JFileChooser fileChooser = new JFileChooser();
 
     // Colors Preset
+    public static final Color BLANK = new Color(0,0,0,0);
     public static final Color PRIMARY = new Color(1, 116, 228);
-    public static final Color PRIMARY_CONTENT = new Color(229, 242, 255);
-    public static final Color PRIMARY_DARK = new Color(1, 90, 177);
-    public static final Color PRIMARY_LIGHT = new Color(26, 142, 254);
-
-    public static final Color SECONDARY = new Color(56, 1, 228);
-    public static final Color SECONDARY_CONTENT = new Color(235, 229, 255);
-    public static final Color SECONDARY_DARK = new Color(44, 1, 177);
-    public static final Color SECONDARY_LIGHT = new Color(81, 26, 254);
-
-    public static final Color BACKGROUND = new Color(24, 26, 27);
-    public static final Color FOREGROUND = new Color(36, 38, 40);
-    public static final Color BORDER = new Color(61, 64, 67);
-
-    public static final Color COPY = new Color(251, 251, 251);
-    public static final Color COPY_LIGHT = new Color(215, 217, 219);
-    public static final Color COPY_LIGHTER = new Color(161, 166, 170);
-
-    public static final Color SUCCESS = new Color(1, 228, 1);
-    public static final Color WARNING = new Color(228, 228, 1);
-    public static final Color ERROR = new Color(228, 1, 1);
-    public static final Color SUCCESS_CONTENT = new Color(0, 0, 0);
-    public static final Color WARNING_CONTENT = new Color(0, 0, 0);
-    public static final Color ERROR_CONTENT = new Color(255, 229, 229);
+    public static final Color BACKGROUND = new Color(0x131364);
+    public static final Color FOREGROUND = new Color(0xFFFFFF);
+    public static final Color BORDER = new Color(0xFFFFFF);
+    public static final Color SENDFILES = new Color(0x0EE10E);
 
     public void anzeigen() {
 
@@ -274,7 +257,7 @@ public class Ui extends JFrame {
         gbc.gridwidth = 1;
         gbc.weightx = 0.5;
         gbc.weighty = 1.0;
-        Main_Files_Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        Main_Files_Panel.setBorder(new LineBorder(BORDER, 2));
         Main_Content_Panel.add(Main_Files_Panel, gbc);
 
         // Adding components to the Files Panel
@@ -327,13 +310,20 @@ public class Ui extends JFrame {
         gbc.gridy = 3;
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.LAST_LINE_END;
-        Main_SendFile_Button.setBackground(SECONDARY);
+        Main_SendFile_Button.setBackground(SENDFILES);
+        Main_SendFile_Button.setBorder(new LineBorder(BORDER, 2));
         Main_Content_Panel.add(Main_SendFile_Button, gbc);
 
         // Background Panel Settings
-        Main_Background_Panel.setBackground(new Color(51, 51, 153));
         Main_Background_Panel.setOpaque(true);
         add(Main_Background_Panel);
+
+        //Color changes to the Components
+        Main_Background_Panel.setBackground(BACKGROUND);
+        Main_Title_Panel.setBackground(BLANK);
+        Main_Content_Panel.setBackground(BLANK);
+        Main_Title_Label.setBackground(BLANK);
+        Main_Title_Label.setForeground(FOREGROUND);
 
         // Set the frame to be visible
         pack();
