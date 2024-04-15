@@ -1,5 +1,7 @@
 package src.frontend;
 
+import src.backend.Peer;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -33,6 +35,7 @@ public class Ui extends JFrame {
     private JPanel Main_Button_Panel = new JPanel();
     private JButton Main_Setting_Button = new JButton("Settings");
     private JButton Main_SendFile_Button = new JButton("Send Files");
+    JFileChooser fileChooser = new JFileChooser();
 
     // Colors Preset
     public static final Color PRIMARY = new Color(1, 116, 228);
@@ -74,7 +77,6 @@ public class Ui extends JFrame {
         Main_Files_Add_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setMultiSelectionEnabled(true); // Enable multiple file selection
 
                 // Show the file chooser dialog
@@ -91,7 +93,7 @@ public class Ui extends JFrame {
                     }
                 } else {
                     // User cancelled or an error occurred
-                    System.out.println("File selection cancelled or an error occurred.");
+                    System.out.println("UI: File selection cancelled or an error occurred.");
                 }
             }
         });
@@ -159,22 +161,22 @@ public class Ui extends JFrame {
                             String Friend_IP = add_Friend_IP_TextField.getText().trim();
 
                             if (Friend_Name.isEmpty() || Friend_IP.isEmpty()) {
-                                throw new IllegalArgumentException("Both fields must be filled.");
+                                throw new IllegalArgumentException("Ui: Both fields must be filled.");
                             }
 
                             if (!Friend_IP.matches("^([0-9]{1,3}\\.){3}[0-9]{1,3}$")) {
-                                throw new IllegalArgumentException("Invalid IP format.");
+                                throw new IllegalArgumentException("Ui: Invalid IP format.");
                             }
 
                             // Add to table model
                             friendsTableModel.addRow(new Object[] { Friend_Name, Friend_IP });
 
-                            System.out.println("Input 1 / Name: " + Friend_Name);
-                            System.out.println("Input 2 / IP Address: " + Friend_IP);
+                            System.out.println("Ui: Input 1 / Name: " + Friend_Name);
+                            System.out.println("Ui: Input 2 / IP Address: " + Friend_IP);
 
                             dialog.dispose(); // Close the dialog
                         } catch (IllegalArgumentException ex) {
-                            JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Ui: Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 });
@@ -204,7 +206,7 @@ public class Ui extends JFrame {
                     // Remove selected row from the model
                     friendsTableModel.removeRow(selectedRow);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Please select a friend to remove.");
+                    JOptionPane.showMessageDialog(null, "Ui: Please select a friend to remove.");
                 }
             }
         });
@@ -219,9 +221,22 @@ public class Ui extends JFrame {
         Main_SendFile_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    File[] selectedFiles = fileChooser.getSelectedFiles(); // Adjust this method to return File[] if not already
+                    if (selectedFiles.length == 0) {
+                        System.out.println("Ui: No files selected to send.");
+                        return; // Exit if no files are selected
+                    }
 
+                    Peer peer = new Peer(); // Assume Peer can handle the files
+                    //peer.sendFiles(selectedFiles); // You may need to adjust 'sendFiles' to accept File[]
+                } catch (Exception ex) {
+                    System.out.println("Ui: Error sending files: " + ex.getMessage());
+                    ex.printStackTrace();
+                }
             }
         });
+
 
         /*
          * // Hover Effects on Buttons
@@ -323,5 +338,14 @@ public class Ui extends JFrame {
         // Set the frame to be visible
         pack();
         setVisible(true);
+    }
+    public String getSelectedFriendIP() {
+        int selectedRow = Main_Friends_Table.getSelectedRow();
+        if (selectedRow != -1) {
+            return Main_Friends_Table.getModel().getValueAt(selectedRow, 0).toString();
+        } else {
+            System.out.println("UI: No Ip Selected / IP Error");
+            return null; // No selection or error handling
+        }
     }
 }
