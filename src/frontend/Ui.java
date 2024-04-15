@@ -227,8 +227,8 @@ public class Ui extends JFrame {
                         System.out.println("Ui: No files selected to send.");
                         return; // Exit if no files are selected
                     }
-
                     Peer peer = new Peer(); // Assume Peer can handle the files
+                    peer.setSelectedFile(selectedFiles);
                     peer.sendFile(getSelectedFriendIP(),50000);
                 } catch (Exception ex) {
                     System.out.println("Ui: Error sending files: " + ex.getMessage());
