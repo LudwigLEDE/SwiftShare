@@ -16,15 +16,16 @@ public class SenderServer { // FileOwnerServer
             String serverIP = localhost.getHostAddress();
 
             // Display the server's IP address
-            System.out.println("File owner's server IP address: " + serverIP);
+            System.out.println("SenderServer: File owner's server IP address: " + serverIP);
 
             // Start the Server
             ServerSocket serverSocket = new ServerSocket(50000); // Choose a port
-            System.out.println("File owner's server is running on port " + SERVER_PORT );
+            System.out.println("SenderServer: File owner's server is running on port " + SERVER_PORT );
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 // Handle each connection in a new thread
                 new Thread(new FileHandler(clientSocket)).start();
+                System.out.println(" SenderServer: Die Connection ist hergestellt");
             }
         } catch (Exception e) {
             e.printStackTrace();
