@@ -6,8 +6,10 @@ import java.net.Socket;
 //Ports die wir nutzen: 50000, 50001, 50002
 public class SenderServer { // FileOwnerServer
 
-    private static  final int SERVER_PORT = 50000;
-    public static void start() {
+    private static final int SERVER_PORT = 50000;
+    private static final int SERVER_PORT_2 = 50001;
+    private static final int SERVER_PORT_3 = 50002;
+    public static void main(String[] args) {
         try {
             // Obtain the local host's IP address
             InetAddress localhost = InetAddress.getLocalHost();
