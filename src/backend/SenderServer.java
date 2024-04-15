@@ -9,7 +9,7 @@ public class SenderServer { // FileOwnerServer
     private static final int SERVER_PORT = 50000;
     private static final int SERVER_PORT_2 = 50001;
     private static final int SERVER_PORT_3 = 50002;
-    public static void main(String[] args) {
+    public static void start() {
         try {
             // Obtain the local host's IP address
             InetAddress localhost = InetAddress.getLocalHost();
