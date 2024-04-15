@@ -6,14 +6,20 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Peer {
-    public static void main(String[] args) throws UnknownHostException {
+    public Peer() {
         // Get the IP address of the file owner's machine
-        InetAddress fileOwnerIPAddress = InetAddress.getLocalHost();
+        InetAddress fileOwnerIPAddress = null;
+        try {
+            fileOwnerIPAddress = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
         String serverIP = fileOwnerIPAddress.getHostAddress();
-        int serverPort = 12345; // Replace with the file owner's server port
+        int serverPort = 50000; // Replace with the file owner's server port
 
         try {
             // Connect to the server
+            System.out.println("...Connect to the server...");
             Socket socket = new Socket(serverIP, serverPort);
 
             // Create input and output streams for communication

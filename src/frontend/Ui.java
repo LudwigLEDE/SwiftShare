@@ -9,30 +9,30 @@ import java.io.File;
 public class Ui extends JFrame {
 
     // Components
-    JPanel Main_Background_Panel = new JPanel();
-    JPanel Main_Content_Panel = new JPanel(new GridBagLayout());
-    JPanel Main_Title_Panel = new JPanel();
-    JLabel Main_Title_Label = new JLabel("SwiftShare");
-    JLabel Main_Title_Logo_Label = new JLabel();
+    private JPanel Main_Background_Panel = new JPanel();
+    private JPanel Main_Content_Panel = new JPanel(new GridBagLayout());
+    private JPanel Main_Title_Panel = new JPanel();
+    private JLabel Main_Title_Label = new JLabel("SwiftShare");
+    private JLabel Main_Title_Logo_Label = new JLabel();
 
-    JPanel Main_Friends_Panel = new JPanel(new GridBagLayout());
-    JLabel Main_Friends_Label = new JLabel("User List");
-    JButton Main_Friends_Add_Button = new JButton("Add");
-    JButton Main_Friends_Remove_Button = new JButton("Remove");
-    DefaultTableModel friendsTableModel = new DefaultTableModel(new Object[] { "Name", "IP Address" }, 0);
-    JTable Main_Friends_Table = new JTable(friendsTableModel);
+    private JPanel Main_Friends_Panel = new JPanel(new GridBagLayout());
+    private JLabel Main_Friends_Label = new JLabel("User List");
+    private JButton Main_Friends_Add_Button = new JButton("Add");
+    private JButton Main_Friends_Remove_Button = new JButton("Remove");
+    private DefaultTableModel friendsTableModel = new DefaultTableModel(new Object[] { "Name", "IP Address" }, 0);
+    private JTable Main_Friends_Table = new JTable(friendsTableModel);
 
-    JPanel Main_Files_Panel = new JPanel(new GridBagLayout());
-    JLabel Main_Files_Label = new JLabel("Selected Files");
-    JButton Main_Files_Clear_Button = new JButton("Clear");
-    JButton Main_Files_Delete_Button = new JButton("Delete");
-    JButton Main_Files_Add_Button = new JButton("Add");
-    DefaultTableModel filesTableModel = new DefaultTableModel(new Object[] { "File Name", "Path" }, 0);
-    JTable Main_Files_SelectedFiles_Table = new JTable(filesTableModel);
+    private JPanel Main_Files_Panel = new JPanel(new GridBagLayout());
+    private JLabel Main_Files_Label = new JLabel("Selected Files");
+    private JButton Main_Files_Clear_Button = new JButton("Clear");
+    private JButton Main_Files_Delete_Button = new JButton("Delete");
+    private JButton Main_Files_Add_Button = new JButton("Add");
+    private DefaultTableModel filesTableModel = new DefaultTableModel(new Object[] { "File Name", "Path" }, 0);
+    private JTable Main_Files_SelectedFiles_Table = new JTable(filesTableModel);
 
-    JPanel Main_Button_Panel = new JPanel();
-    JButton Main_Setting_Button = new JButton("Settings");
-    JButton Main_SendFile_Button = new JButton("Send Files");
+    private JPanel Main_Button_Panel = new JPanel();
+    private JButton Main_Setting_Button = new JButton("Settings");
+    private JButton Main_SendFile_Button = new JButton("Send Files");
 
     // Colors Preset
     public static final Color PRIMARY = new Color(1, 116, 228);
@@ -60,7 +60,7 @@ public class Ui extends JFrame {
     public static final Color WARNING_CONTENT = new Color(0, 0, 0);
     public static final Color ERROR_CONTENT = new Color(255, 229, 229);
 
-    public Ui() {
+    public void anzeigen() {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280, 960);
