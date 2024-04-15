@@ -229,7 +229,7 @@ public class Ui extends JFrame {
                     }
 
                     Peer peer = new Peer(); // Assume Peer can handle the files
-                    //peer.sendFiles(selectedFiles); // You may need to adjust 'sendFiles' to accept File[]
+                    peer.sendFile(getSelectedFriendIP(),50000);
                 } catch (Exception ex) {
                     System.out.println("Ui: Error sending files: " + ex.getMessage());
                     ex.printStackTrace();
