@@ -12,7 +12,7 @@ public class Peer {
         selectedFile = file;
     }
 
-    public void sendFile(String ip, int port) {
+    public void sendFile(String ip, int port) throws UnknownHostException {
         // Get the IP address of the file owner's machine
         /* InetAddress fileOwnerIPAddress = null;
         try {
@@ -22,7 +22,11 @@ public class Peer {
         }
         String serverIP = fileOwnerIPAddress.getHostAddress();
         int serverPort = 50000; // Replace with the file owner's server port
+InetAddress localhost = InetAddress.getLocalHost();
+        String serverIP = localhost.getHostAddress();
 */
+
+
         try {
             for (File file : selectedFile) {
                 // Connect to the server

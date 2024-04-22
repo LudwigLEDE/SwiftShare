@@ -226,7 +226,9 @@ public class Ui extends JFrame {
                     }
                     Peer peer = new Peer(); // Assume Peer can handle the files
                     peer.setSelectedFile(selectedFiles);
-                    peer.sendFile(getSelectedFriendIP(), 50000);
+                    String selectedFriendIP = getSelectedFriendIP();
+                    System.out.println(selectedFriendIP);
+                    peer.sendFile(selectedFriendIP, 50000);
                 } catch (Exception ex) {
                     System.out.println("Ui: Error sending files: " + ex.getMessage());
                     ex.printStackTrace();
@@ -347,7 +349,7 @@ public class Ui extends JFrame {
     public String getSelectedFriendIP() {
         int selectedRow = Main_Friends_Table.getSelectedRow();
         if (selectedRow != -1) {
-            return Main_Friends_Table.getModel().getValueAt(selectedRow, 0).toString();
+            return Main_Friends_Table.getModel().getValueAt(selectedRow, 1).toString();
         } else {
             System.out.println("UI: No Ip Selected / IP Error");
             return null; // No selection or error handling
