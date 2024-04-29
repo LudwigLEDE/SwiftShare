@@ -67,7 +67,7 @@ public class Ui extends JFrame {
         }
 
         // Icon Setup
-        Main_Title_Logo_Label.setIcon(new ImageIcon("src/assets/img/Logo286px.png"));
+        Main_Title_Logo_Label.setIcon(new ImageIcon("src/assets/img/Logo100px.png"));
         // ActionListener
         Main_Files_Add_Button.addActionListener(new ActionListener() {
             @Override
@@ -262,9 +262,27 @@ public class Ui extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(5, 5, 5, 5);
 
+        //Main Title Pannel Layout
+        //Anderes Layout
+        /*
+        BoxLayout TitleLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
+        Main_Title_Panel.setLayout(TitleLayout);
+        */
+
+        Main_Title_Panel.setLayout(new BorderLayout());
+
+
+        JPanel content_Main_Title_Panel = new JPanel();
+        content_Main_Title_Panel.setLayout(new GridLayout(1, 2));
+        content_Main_Title_Panel.setBackground(BLANK);
+
+
         // Adding the Title Panel
-        Main_Title_Panel.add(Main_Title_Logo_Label);
-        Main_Title_Panel.add(Main_Title_Label);
+        content_Main_Title_Panel.add(Main_Title_Logo_Label);
+        content_Main_Title_Panel.add(Main_Title_Label);
+
+        Main_Title_Panel.add(content_Main_Title_Panel, BorderLayout.WEST);
+
         Main_Background_Panel.add(Main_Title_Panel, BorderLayout.NORTH);
 
         // Adding the Files Panel
