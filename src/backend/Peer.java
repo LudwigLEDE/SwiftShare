@@ -22,7 +22,7 @@ public class Peer {
         }
         String serverIP = fileOwnerIPAddress.getHostAddress();
         int serverPort = 50000; // Replace with the file owner's server port
-InetAddress localhost = InetAddress.getLocalHost();
+        InetAddress localhost = InetAddress.getLocalHost();
         String serverIP = localhost.getHostAddress();
 */
 
@@ -30,11 +30,13 @@ InetAddress localhost = InetAddress.getLocalHost();
         try {
             for (File file : selectedFile) {
                 // Connect to the server
-                System.out.println(" PEER: ...Connect to the server...");
+                System.out.println("PEER: ...Connect to the server...");
+                System.out.println("PEER: " + ip + " " + port);
                 Socket socket = new Socket(ip, port);
 
                 // Create input and output streams for communication
-                /*DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
+                /*
+                DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
                 DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
                 // Send file name and size to the server
