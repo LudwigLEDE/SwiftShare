@@ -20,19 +20,23 @@ public class Ui extends JFrame {
     private JLabel Main_Title_Logo_Label = new JLabel();
 
     private JPanel Main_Friends_Panel = new JPanel(new GridBagLayout());
+    private JPanel Main_Friends_Header_Panel = new JPanel();
     private JLabel Main_Friends_Label = new JLabel("User List");
     private JButton Main_Friends_Add_Button = new JButton("Add");
     private JButton Main_Friends_Remove_Button = new JButton("Remove");
     private DefaultTableModel friendsTableModel = new DefaultTableModel(new Object[] { "Name", "IP Address" }, 0);
     private JTable Main_Friends_Table = new JTable(friendsTableModel);
+    private JScrollPane friendsScrollPane = new JScrollPane(Main_Friends_Table);
 
     private JPanel Main_Files_Panel = new JPanel(new GridBagLayout());
+    private JPanel Main_Files_Header_Panel = new JPanel();
     private JLabel Main_Files_Label = new JLabel("Selected Files");
     private JButton Main_Files_Clear_Button = new JButton("Clear");
     private JButton Main_Files_Delete_Button = new JButton("Delete");
     private JButton Main_Files_Add_Button = new JButton("Add");
     private DefaultTableModel filesTableModel = new DefaultTableModel(new Object[] { "File Name", "Path" }, 0);
     private JTable Main_Files_SelectedFiles_Table = new JTable(filesTableModel);
+    private JScrollPane filesScrollPane = new JScrollPane(Main_Files_SelectedFiles_Table);
 
     private JPanel Main_Button_Panel = new JPanel();
     private JButton Main_Setting_Button = new JButton("Settings");
@@ -236,128 +240,104 @@ public class Ui extends JFrame {
             }
         });
 
-        /*
-         * // Hover Effects on Buttons
-         * JButton[] buttons = { Main_Friends_Add_Button, Main_Files_Add_Button,
-         * Main_Files_Clear_Button,
-         * Main_SendFile_Button, Main_Setting_Button };
-         * for (JButton button : buttons) {
-         * button.addMouseListener((MouseListener) new MouseAdapter() {
-         * public void mouseEntered(MouseEvent evt) {
-         * button.setBackground(buttonColor.darker()); // Darker on hover
-         * }
-         * 
-         * public void mouseExited(MouseEvent evt) {
-         * button.setBackground(buttonColor); // Revert to original
-         * }
-         * });
-         * }
-         */
-        // Layout for the main content panel
-        Main_Background_Panel.setLayout(new BorderLayout());
-        Main_Background_Panel.add(Main_Content_Panel, BorderLayout.CENTER);
+        // Layout and more for UI
 
-        // GridBag constraints for the components
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        //Main Title Pannel Layout
-        //Anderes Layout
-        /*
-        BoxLayout TitleLayout = new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS);
-        Main_Title_Panel.setLayout(TitleLayout);
-        */
-
-        Main_Title_Panel.setLayout(new BorderLayout());
-
-
-        JPanel content_Main_Title_Panel = new JPanel();
-        content_Main_Title_Panel.setLayout(new GridLayout(1, 2));
-        content_Main_Title_Panel.setBackground(BLANK);
-
-
-        // Adding the Title Panel
-        content_Main_Title_Panel.add(Main_Title_Logo_Label);
-        content_Main_Title_Panel.add(Main_Title_Label);
-
-        Main_Title_Panel.add(content_Main_Title_Panel, BorderLayout.WEST);
-
-        Main_Background_Panel.add(Main_Title_Panel, BorderLayout.NORTH);
-
-        // Adding the Files Panel
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 1;
-        gbc.weightx = 0.5;
-        gbc.weighty = 1.0;
-        Main_Files_Panel.setBorder(new LineBorder(BORDER, 2));
-        Main_Content_Panel.add(Main_Files_Panel, gbc);
-
-        // Adding components to the Files Panel
-        GridBagConstraints fpg = new GridBagConstraints();
-        fpg.gridy = 0;
-        fpg.gridwidth = 3;
-        Main_Files_Panel.add(Main_Files_Label, fpg);
-        fpg.gridy = 1;
-        Main_Files_Panel.add(Main_Files_Add_Button, fpg);
-        Main_Files_Panel.add(Main_Files_Delete_Button, fpg);
-        Main_Files_Panel.add(Main_Files_Clear_Button, fpg);
-        fpg.gridy = 2;
-        fpg.gridwidth = 3;
-        JScrollPane filesScrollPane = new JScrollPane(Main_Files_SelectedFiles_Table);
-        Main_Files_Panel.add(filesScrollPane, fpg);
-
-        // Adding the Friends Panel
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.gridwidth = 1;
-        gbc.weightx = 0.5;
-        gbc.weighty = 1.0;
-        Main_Friends_Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        Main_Content_Panel.add(Main_Friends_Panel, gbc);
-
-        // Adding components to the Friends Panel
-        GridBagConstraints frpg = new GridBagConstraints();
-        frpg.gridwidth = 1;
-        frpg.weightx = 0.5;
-        frpg.weighty = 0;
-        frpg.gridy = 0;
-        Main_Friends_Panel.add(Main_Friends_Label, frpg);
-        frpg.gridy = 1;
-        Main_Friends_Panel.add(Main_Friends_Add_Button, frpg);
-        Main_Friends_Panel.add(Main_Friends_Remove_Button, frpg);
-        JScrollPane friendsScrollPane = new JScrollPane(Main_Friends_Table);
-        frpg.gridy = 2;
-        frpg.weighty = 1.0;
-        Main_Friends_Panel.add(friendsScrollPane, frpg);
-
-        // Adding the Send Files Button
-        gbc.gridx = 0; // Position X
-        gbc.gridy = 3;
-        gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.LINE_START; // Anchor to start of line (left side)
-        Main_Content_Panel.add(Main_Setting_Button, gbc);
-
-        // Adding the Settings Button
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.LAST_LINE_END;
-        Main_SendFile_Button.setBackground(SENDFILES);
-        Main_SendFile_Button.setBorder(new LineBorder(BORDER, 2));
-        Main_Content_Panel.add(Main_SendFile_Button, gbc);
-
-        // Background Panel Settings
-        Main_Background_Panel.setOpaque(true);
+        // Layer 1.1 Background Panel
+        Main_Background_Panel.setBackground(BACKGROUND);
+        Main_Background_Panel.setLayout(new BorderLayout(4, 4));
         add(Main_Background_Panel);
 
-        // Color changes to the Components
-        Main_Background_Panel.setBackground(BACKGROUND);
-        Main_Title_Panel.setBackground(BLANK);
-        Main_Content_Panel.setBackground(BLANK);
-        Main_Title_Label.setBackground(BLANK);
+        // Layer 2.1 Content Panel
+        Main_Content_Panel.setBackground(BACKGROUND);
+        Main_Content_Panel.setLayout(new GridLayout(1, 1, 2, 2));
+        Main_Background_Panel.add(Main_Content_Panel, BorderLayout.CENTER);
+
+        // Layer 3.1 Title Panel
+        Main_Title_Panel.setBackground(BACKGROUND);
+        Main_Background_Panel.add(Main_Title_Panel, BorderLayout.NORTH);
+
+        // Layer 3.2 Logo Label
+        Main_Title_Panel.add(Main_Title_Logo_Label);
+
+        // Layer 3.3 Title Label
         Main_Title_Label.setForeground(FOREGROUND);
+        Main_Title_Panel.add(Main_Title_Label);
+
+        // Layer 4.1 Files Panel
+        Main_Files_Panel.setLayout(new BorderLayout(4, 4));
+        Main_Files_Panel.setBackground(BACKGROUND);
+        Main_Files_Panel.setForeground(FOREGROUND);
+        Main_Files_Panel.add(Main_Files_Header_Panel, BorderLayout.NORTH);
+        Main_Content_Panel.add(Main_Files_Panel);
+
+        // Layer 4.2 Files Header
+        Main_Files_Header_Panel.setBackground(BACKGROUND);
+        Main_Files_Header_Panel.setForeground(FOREGROUND);
+        Main_Files_Header_Panel.add(Main_Files_Label);
+        Main_Files_Header_Panel.add(Main_Files_Add_Button);
+        Main_Files_Header_Panel.add(Main_Files_Delete_Button);
+        Main_Files_Header_Panel.add(Main_Files_Clear_Button);
+
+        // Layer 4.2.2 Files Label
+        Main_Files_Label.setForeground(FOREGROUND);
+
+        // Layer 4.3 Files Table
+        Main_Files_SelectedFiles_Table.setBackground(BACKGROUND);
+        Main_Files_SelectedFiles_Table.setForeground(FOREGROUND);
+        Main_Files_Panel.add(filesScrollPane, BorderLayout.CENTER);
+
+        // Layer 4.3.2 Files Pane
+        filesScrollPane.setBackground(BACKGROUND);
+        filesScrollPane.setForeground(FOREGROUND);
+
+        // Layer X.X
+        JPanel Right_Content_Panel = new JPanel();
+        Right_Content_Panel.setLayout(new BorderLayout(4, 4));
+        Right_Content_Panel.setBackground(BACKGROUND);
+        Main_Content_Panel.add(Right_Content_Panel);
+
+        // Layer 5.1 Friends Panel
+        Main_Friends_Panel.setLayout(new BorderLayout(4, 4));
+        Main_Friends_Panel.setBackground(BACKGROUND);
+        Main_Friends_Panel.setForeground(FOREGROUND);
+        Right_Content_Panel.add(Main_Friends_Panel, BorderLayout.CENTER);
+
+        // Layer 5.2 Friends Header
+        Main_Friends_Header_Panel.setBackground(BACKGROUND);
+        Main_Friends_Header_Panel.setForeground(FOREGROUND);
+        Main_Friends_Header_Panel.add(Main_Friends_Label);
+        Main_Friends_Header_Panel.add(Main_Friends_Add_Button);
+        Main_Friends_Header_Panel.add(Main_Friends_Remove_Button);
+        Main_Friends_Panel.add(Main_Friends_Header_Panel, BorderLayout.NORTH);
+
+        // Layer 5.2.2 Friends Label
+        Main_Friends_Label.setForeground(FOREGROUND);
+
+        // Layer 5.4 Friends Table
+        Main_Friends_Table.setBackground(BACKGROUND);
+        Main_Friends_Table.setForeground(FOREGROUND);
+
+        // Layer 5.4.2 Friends Pane
+        friendsScrollPane.setBackground(BACKGROUND);
+        friendsScrollPane.setForeground(FOREGROUND);
+        Main_Friends_Panel.add(friendsScrollPane, BorderLayout.CENTER);
+
+        // Layer 6.1 Buttons Panel
+        Main_Button_Panel.setBackground(BACKGROUND);
+        Main_Button_Panel.setLayout(new BorderLayout(2, 2));
+        Right_Content_Panel.add(Main_Button_Panel, BorderLayout.SOUTH);
+
+        // Layer 6.2 Buttons
+        Main_Button_Panel.add(Main_Setting_Button, BorderLayout.NORTH);
+        Main_Button_Panel.add(Main_SendFile_Button, BorderLayout.SOUTH);
+
+        // Layer 6.3 Setting Button
+        Main_Setting_Button.setBackground(PRIMARY);
+        Main_Setting_Button.setForeground(Color.white);
+
+        // Layer 6.4 Send Button
+        Main_SendFile_Button.setBackground(SENDFILES);
+        Main_SendFile_Button.setForeground(Color.black);
 
         // Set the frame to be visible
         pack();
