@@ -2,15 +2,35 @@ package src.backend;
 
 import java.io.*;
 import java.net.Socket;
+import javax.swing.JOptionPane;
 
 public class FileHandler implements Runnable {
     private Socket clientSocket;
     public FileHandler(Socket clientSocket){
         this.clientSocket = clientSocket;
-
     }
 
-    public void run() {
+    public void run(){
+        try {
+            // Prompt the user to accept or reject the file
+            if (confirmTransfer()) {
+                // If the user accepts, proceed with file transfer
+                handleTransfer();
+            } else {
+                // If the user rejects, close the connection
+                clientSocket.close();
+                System.out.println("File transfer rejected by user.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //Confirm wether you want to accept or deny the request for File transfering, and if yes, return yes.
+    private boolean confirmTransfer() {
+        int choice = JOptionPane.showConfirmDialog(null, "Do you want to receive the file?", "File Transfer Confirmation", JOptionPane.YES_NO_OPTION);
+        return choice == JOptionPane.YES_OPTION;
+    }
+    public void handleTransfer() {
         try {
             // Receive file from client
             InputStream is = clientSocket.getInputStream();
