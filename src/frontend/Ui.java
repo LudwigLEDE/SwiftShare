@@ -1,15 +1,15 @@
+
 package src.frontend;
 
 import src.backend.Peer;
+import src.backend.Friendsaver;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-
 public class Ui extends JFrame {
 
     // Components
@@ -50,6 +50,8 @@ public class Ui extends JFrame {
     public static final Color FOREGROUND = new Color(0xFFFFFF);
     public static final Color BORDER = new Color(0xFFFFFF);
     public static final Color SENDFILES = new Color(0x0EE10E);
+
+    private Friendsaver FriendSaver = new Friendsaver();
 
     public void anzeigen() {
 
@@ -168,16 +170,20 @@ public class Ui extends JFrame {
                             }
 
                             // Add to table model
-                            friendsTableModel.addRow(new Object[] { Friend_Name, Friend_IP });
+                            friendsTableModel.addRow(new Object[] { Friend_Name, Friend_Name });
 
-                            System.out.println("Ui: Input 1 / Name: " + Friend_Name);
-                            System.out.println("Ui: Input 2 / IP Address: " + Friend_IP);
+                            // Save to SQLite database
+                            FriendSaver.saveFriend(Friend_Name, Friend_IP);
+
 
                             dialog.dispose(); // Close the dialog
                         } catch (IllegalArgumentException ex) {
                             JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Ui: Error",
                                     JOptionPane.ERROR_MESSAGE);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
                         }
+
                     }
                 });
 
