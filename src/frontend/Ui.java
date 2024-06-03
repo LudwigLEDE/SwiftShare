@@ -286,8 +286,6 @@ public class Ui extends JFrame {
         Main_Files_Label.setForeground(FOREGROUND);
 
         // Layer 4.3 Files Table
-        Main_Files_SelectedFiles_Table.setBackground(BACKGROUND);
-        Main_Files_SelectedFiles_Table.setForeground(FOREGROUND);
         Main_Files_Panel.add(filesScrollPane, BorderLayout.CENTER);
 
         // Layer 4.3.2 Files Pane
