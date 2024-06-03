@@ -1,8 +1,8 @@
 
 package src.frontend;
 
+import src.backend.DatenBank;
 import src.backend.Peer;
-import src.backend.Friendsaver;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -51,10 +51,11 @@ public class Ui extends JFrame {
     public static final Color BORDER = new Color(0xFFFFFF);
     public static final Color SENDFILES = new Color(0x0EE10E);
 
-    private Friendsaver FriendSaver = new Friendsaver();
+//    private Friendsaver FriendSaver = new Friendsaver();
 
     public void anzeigen() {
 
+        DatenBank.laden(Main_Friends_Table, "DB_Friends.txt");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280, 960);
         setTitle("Swift Share");
@@ -170,18 +171,16 @@ public class Ui extends JFrame {
                             }
 
                             // Add to table model
-                            friendsTableModel.addRow(new Object[] { Friend_Name, Friend_Name });
+                            friendsTableModel.addRow(new Object[] { Friend_Name, Friend_IP });
 
                             // Save to SQLite database
-                            FriendSaver.saveFriend(Friend_Name, Friend_IP);
+                            DatenBank.speichern(friendsTableModel);
 
 
                             dialog.dispose(); // Close the dialog
                         } catch (IllegalArgumentException ex) {
                             JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Ui: Error",
                                     JOptionPane.ERROR_MESSAGE);
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
                         }
 
                     }
@@ -209,8 +208,7 @@ public class Ui extends JFrame {
 
                 // Check if a row is actually selected
                 if (selectedRow != -1) {
-                    // Remove selected row from the model
-                    friendsTableModel.removeRow(selectedRow);
+                    DatenBank.delete(Main_Friends_Table,"DB_Friends.txt",selectedRow);
                 } else {
                     JOptionPane.showMessageDialog(null, "Ui: Please select a friend to remove.");
                 }
@@ -320,8 +318,7 @@ public class Ui extends JFrame {
         Main_Friends_Label.setForeground(FOREGROUND);
 
         // Layer 5.4 Friends Table
-        Main_Friends_Table.setBackground(BACKGROUND);
-        Main_Friends_Table.setForeground(FOREGROUND);
+        Main_Friends_Table.setForeground(Color.BLACK);
 
         // Layer 5.4.2 Friends Pane
         friendsScrollPane.setBackground(BACKGROUND);
