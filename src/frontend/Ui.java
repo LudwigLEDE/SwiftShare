@@ -218,6 +218,9 @@ public class Ui extends JFrame {
         Main_Setting_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Main_Background_Panel.remove(Main_Content_Panel);
+                Main_Background_Panel.add(new SettingsUi());
+                Main_Background_Panel.revalidate();
 
             }
         });
