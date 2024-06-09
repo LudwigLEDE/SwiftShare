@@ -22,6 +22,12 @@ public class Peer {
                 Socket socket = new Socket(ip, port);
 
                 OutputStream os = socket.getOutputStream();
+                DataOutputStream dos = new DataOutputStream(os);
+
+                dos.writeInt(file.getName().length());
+                dos.writeBytes(file.getName());
+                dos.writeLong(file.length());
+
                 // Open file input stream and send file content to the server
                 try (FileInputStream fileInputStream = new FileInputStream(file)) {
                     byte[] buffer = new byte[4096];

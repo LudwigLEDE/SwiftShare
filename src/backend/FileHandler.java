@@ -30,20 +30,19 @@ public class FileHandler implements Runnable {
         int choice = JOptionPane.showConfirmDialog(null, "Do you want to receive the file?", "File Transfer Confirmation", JOptionPane.YES_NO_OPTION);
         return choice == JOptionPane.YES_OPTION;
     }
-    public void handleTransfer() {
+    private void handleTransfer() {
         try {
-            // Receive file from client
-            DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
+            InputStream is = clientSocket.getInputStream();
+            DataInputStream dis = new DataInputStream(is);
 
-            // Read the file name
-            String fileName = dis.readUTF();
+            // Read the length of the filename
+            int fileNameLength = dis.readInt();
+            byte[] fileNameBytes = new byte[fileNameLength];
+            dis.readFully(fileNameBytes);
+            String fileName = new String(fileNameBytes);
 
             // Read the file size
             long fileSize = dis.readLong();
-
-            if (fileName.contains(File.separator) || fileName.contains("..")) {
-                throw new IOException("Invalid file path received.");
-            }
 
             File downloadsFolder = new File(System.getProperty("user.home"), "Downloads");
             if (!downloadsFolder.exists()) {
