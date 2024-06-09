@@ -11,6 +11,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
 
 public class Ui extends JFrame {
 
@@ -254,6 +259,8 @@ public class Ui extends JFrame {
 
 
         // Layout and more for UI
+        //Layer 0
+        setBackground(BACKGROUND);
 
         // Layer 1.1 Background Panel
         Main_Background_Panel.setBackground(BACKGROUND);
@@ -378,6 +385,26 @@ public class Ui extends JFrame {
         Main_Background_Panel.add(Main_Content_Panel, BorderLayout.CENTER); // Re-add the content panel
         Main_Background_Panel.revalidate();
         Main_Background_Panel.repaint();
+    }
+
+    public static String getIPAddress() {
+        try {
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+                Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
+                while (inetAddresses.hasMoreElements()) {
+                    InetAddress inetAddress = inetAddresses.nextElement();
+                    if (!inetAddress.isLoopbackAddress() && inetAddress.isSiteLocalAddress()) {
+                        return inetAddress.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+            return "Unable to get IP Address";
+        }
+        return "Unable to get IP Address";
     }
 
 }
