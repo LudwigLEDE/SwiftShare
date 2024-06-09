@@ -58,6 +58,8 @@ public class Ui extends JFrame {
     public static final Color BORDER = new Color(0xFFFFFF);
     public static final Color SENDFILES = new Color(0x0EE10E);
 
+    public static int Port = 50000;
+
     public void anzeigen() {
 
         //Datenbank Laden
