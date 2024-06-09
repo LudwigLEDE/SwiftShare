@@ -7,19 +7,19 @@ import java.awt.event.ActionListener;
 public class SettingsUi extends JPanel {
     JLabel Settings_Title = new JLabel("Settings");
     JButton Settings_Back_button = new JButton("Back");
+    private Ui uiInstance;
 
-    public SettingsUi(){
+    public SettingsUi(Ui uiInstance){
+        this.uiInstance = uiInstance;
+
         Settings_Back_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main_Background_Panel.remove(SettingsUi);
-
+                uiInstance.back();
             }
         });
-
 
         add(Settings_Title);
         add(Settings_Back_button);
     }
-
 }

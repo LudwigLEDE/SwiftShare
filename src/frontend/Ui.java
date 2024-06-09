@@ -1,15 +1,15 @@
-
 package src.frontend;
 
-import src.backend.DatenBank;
 import src.backend.Peer;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+
 public class Ui extends JFrame {
 
     // Components
@@ -51,11 +51,8 @@ public class Ui extends JFrame {
     public static final Color BORDER = new Color(0xFFFFFF);
     public static final Color SENDFILES = new Color(0x0EE10E);
 
-//    private Friendsaver FriendSaver = new Friendsaver();
-
     public void anzeigen() {
 
-        DatenBank.laden(Main_Friends_Table, "DB_Friends.txt");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280, 960);
         setTitle("Swift Share");
@@ -173,16 +170,14 @@ public class Ui extends JFrame {
                             // Add to table model
                             friendsTableModel.addRow(new Object[] { Friend_Name, Friend_IP });
 
-                            // Save to SQLite database
-                            DatenBank.speichern(friendsTableModel);
-
+                            System.out.println("Ui: Input 1 / Name: " + Friend_Name);
+                            System.out.println("Ui: Input 2 / IP Address: " + Friend_IP);
 
                             dialog.dispose(); // Close the dialog
                         } catch (IllegalArgumentException ex) {
                             JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Ui: Error",
                                     JOptionPane.ERROR_MESSAGE);
                         }
-
                     }
                 });
 
@@ -208,7 +203,8 @@ public class Ui extends JFrame {
 
                 // Check if a row is actually selected
                 if (selectedRow != -1) {
-                    DatenBank.delete(Main_Friends_Table,"DB_Friends.txt",selectedRow);
+                    // Remove selected row from the model
+                    friendsTableModel.removeRow(selectedRow);
                 } else {
                     JOptionPane.showMessageDialog(null, "Ui: Please select a friend to remove.");
                 }
@@ -218,9 +214,7 @@ public class Ui extends JFrame {
         Main_Setting_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main_Background_Panel.remove(Main_Content_Panel);
-                Main_Background_Panel.add(new SettingsUi());
-                Main_Background_Panel.revalidate();
+                settings();
 
             }
         });
@@ -289,6 +283,8 @@ public class Ui extends JFrame {
         Main_Files_Label.setForeground(FOREGROUND);
 
         // Layer 4.3 Files Table
+        Main_Files_SelectedFiles_Table.setBackground(BACKGROUND);
+        Main_Files_SelectedFiles_Table.setForeground(FOREGROUND);
         Main_Files_Panel.add(filesScrollPane, BorderLayout.CENTER);
 
         // Layer 4.3.2 Files Pane
@@ -319,7 +315,8 @@ public class Ui extends JFrame {
         Main_Friends_Label.setForeground(FOREGROUND);
 
         // Layer 5.4 Friends Table
-        Main_Friends_Table.setForeground(Color.BLACK);
+        Main_Friends_Table.setBackground(BACKGROUND);
+        Main_Friends_Table.setForeground(FOREGROUND);
 
         // Layer 5.4.2 Friends Pane
         friendsScrollPane.setBackground(BACKGROUND);
@@ -357,4 +354,20 @@ public class Ui extends JFrame {
             return null; // No selection or error handling
         }
     }
+    public void settings(){
+        Main_Background_Panel.remove(Main_Content_Panel);
+        Main_Background_Panel.add(new SettingsUi(this), BorderLayout.CENTER);
+        Main_Background_Panel.revalidate();
+        Main_Background_Panel.repaint();
+    }
+
+
+    public void back(){
+        Main_Background_Panel.removeAll();
+        Main_Background_Panel.add(Main_Title_Panel, BorderLayout.NORTH); // Re-add the title panel
+        Main_Background_Panel.add(Main_Content_Panel, BorderLayout.CENTER); // Re-add the content panel
+        Main_Background_Panel.revalidate();
+        Main_Background_Panel.repaint();
+    }
+
 }
