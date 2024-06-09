@@ -223,8 +223,7 @@ public class Ui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    File[] selectedFiles = fileChooser.getSelectedFiles(); // Adjust this method to return File[] if not
-                                                                           // already
+                    File[] selectedFiles = fileChooser.getSelectedFiles(); // Adjust this method to return File[] if not already
                     if (selectedFiles.length == 0) {
                         System.out.println("Ui: No files selected to send.");
                         return; // Exit if no files are selected
@@ -232,7 +231,12 @@ public class Ui extends JFrame {
                     Peer peer = new Peer(); // Assume Peer can handle the files
                     peer.setSelectedFile(selectedFiles);
                     String selectedFriendIP = getSelectedFriendIP();
-                    System.out.println(selectedFriendIP);
+                    System.out.println("Selected Friend IP: " + selectedFriendIP);
+
+                    for (File file : selectedFiles) {
+                        System.out.println("File Path: " + file.getAbsolutePath());
+                    }
+
                     peer.sendFile(selectedFriendIP, 50000);
                 } catch (Exception ex) {
                     System.out.println("Ui: Error sending files: " + ex.getMessage());
@@ -240,6 +244,7 @@ public class Ui extends JFrame {
                 }
             }
         });
+
 
         // Layout and more for UI
 
