@@ -1,6 +1,8 @@
 package src.frontend;
 
+import src.backend.DatenBank;
 import src.backend.Peer;
+import src.backend.FileHandler;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -53,8 +55,11 @@ public class Ui extends JFrame {
 
     public void anzeigen() {
 
+        //Datenbank Laden
+        DatenBank.laden(Main_Friends_Table, "DB_Friends.txt");
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1280, 960);
+        setSize(1280,   960);
         setTitle("Swift Share");
         setResizable(false);
 
@@ -173,6 +178,8 @@ public class Ui extends JFrame {
                             System.out.println("Ui: Input 1 / Name: " + Friend_Name);
                             System.out.println("Ui: Input 2 / IP Address: " + Friend_IP);
 
+                            DatenBank.speichern(friendsTableModel);
+
                             dialog.dispose(); // Close the dialog
                         } catch (IllegalArgumentException ex) {
                             JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Ui: Error",
@@ -204,7 +211,7 @@ public class Ui extends JFrame {
                 // Check if a row is actually selected
                 if (selectedRow != -1) {
                     // Remove selected row from the model
-                    friendsTableModel.removeRow(selectedRow);
+                    DatenBank.delete(Main_Friends_Table,"DB_Friends.txt",selectedRow);
                 } else {
                     JOptionPane.showMessageDialog(null, "Ui: Please select a friend to remove.");
                 }
@@ -288,8 +295,7 @@ public class Ui extends JFrame {
         Main_Files_Label.setForeground(FOREGROUND);
 
         // Layer 4.3 Files Table
-        Main_Files_SelectedFiles_Table.setBackground(BACKGROUND);
-        Main_Files_SelectedFiles_Table.setForeground(FOREGROUND);
+        Main_Files_SelectedFiles_Table.setForeground(Color.BLACK);
         Main_Files_Panel.add(filesScrollPane, BorderLayout.CENTER);
 
         // Layer 4.3.2 Files Pane
@@ -320,8 +326,7 @@ public class Ui extends JFrame {
         Main_Friends_Label.setForeground(FOREGROUND);
 
         // Layer 5.4 Friends Table
-        Main_Friends_Table.setBackground(BACKGROUND);
-        Main_Friends_Table.setForeground(FOREGROUND);
+        Main_Friends_Table.setForeground(Color.BLACK);
 
         // Layer 5.4.2 Friends Pane
         friendsScrollPane.setBackground(BACKGROUND);
