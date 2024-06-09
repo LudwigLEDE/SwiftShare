@@ -33,40 +33,43 @@ public class FileHandler implements Runnable {
     public void handleTransfer() {
         try {
             // Receive file from client
-            InputStream is = clientSocket.getInputStream();
+            DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
 
-            // Read file name sent by client
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            String fileName = reader.readLine();
-            System.out.println("Received file name: " + fileName);
+            // Read the file name
+            String fileName = dis.readUTF();
 
-            // Save received file
+            // Read the file size
+            long fileSize = dis.readLong();
+
+            if (fileName.contains(File.separator) || fileName.contains("..")) {
+                throw new IOException("Invalid file path received.");
+            }
+
             File downloadsFolder = new File(System.getProperty("user.home"), "Downloads");
-            File newFile = new File(downloadsFolder, fileName);
-            saveFile(is, newFile);
+            if (!downloadsFolder.exists()) {
+                downloadsFolder.mkdirs();
+            }
 
-            is.close();
+            File file = new File(downloadsFolder, fileName);
+            saveFile(dis, file, fileSize);
+
             clientSocket.close();
-            System.out.println("File received and saved: " + fileName);
+            System.out.println("File received and saved as " + file.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void saveFile(InputStream is, File file) {
-        try {
-            // Save received file to the specified directory
-            FileOutputStream fos = new FileOutputStream(file);
-
-            byte[] buffer = new byte[1024];
+    private void saveFile(DataInputStream dis, File file, long fileSize) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            byte[] buffer = new byte[4096];
             int bytesRead;
-            while ((bytesRead = is.read(buffer)) != -1) {
-                fos.write(buffer, 0, bytesRead);
-            }
+            long totalBytesRead = 0;
 
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            while (totalBytesRead < fileSize && (bytesRead = dis.read(buffer, 0, (int) Math.min(buffer.length, fileSize - totalBytesRead))) != -1) {
+                fos.write(buffer, 0, bytesRead);
+                totalBytesRead += bytesRead;
+            }
         }
     }
 }
