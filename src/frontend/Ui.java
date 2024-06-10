@@ -4,11 +4,9 @@ package src.frontend;
 //File Imports
 import src.backend.DatenBank;
 import src.backend.Peer;
-import src.backend.FileHandler;
 
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -17,7 +15,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 /**
@@ -73,7 +70,7 @@ public class Ui extends JFrame {
     public void anzeigen() {
 
         //Datenbank Laden
-        DatenBank.laden(Main_Friends_Table, "DB_Friends.txt");
+        DatenBank.laden(Main_Friends_Table, "DB.txt");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280,   960);
@@ -228,7 +225,7 @@ public class Ui extends JFrame {
                 // Check if a row is actually selected
                 if (selectedRow != -1) {
                     // Remove selected row from the model
-                    DatenBank.delete(Main_Friends_Table,"DB_Friends.txt",selectedRow);
+                    DatenBank.delete(Main_Friends_Table, "DB.txt",selectedRow);
                 } else {
                     JOptionPane.showMessageDialog(null, "Ui: Please select a friend to remove.");
                 }

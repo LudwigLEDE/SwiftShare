@@ -9,7 +9,7 @@ import javax.swing.table.*;
  * into a JTable. The data is stored in a semicolon-separated format.
  */
 public class DatenBank {
-    static String dateiname = "DB_Friends.txt";
+    static String dateiname = "DB.txt";
 
     /**
      * Saves the data from the provided {@code DefaultTableModel} into a file.
