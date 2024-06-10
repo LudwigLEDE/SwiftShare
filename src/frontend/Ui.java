@@ -4,12 +4,14 @@ package src.frontend;
 //File Imports
 import src.backend.DatenBank;
 import src.backend.Peer;
+import src.assets.ResourceManager;
 
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -90,7 +92,11 @@ public class Ui extends JFrame {
         }
 
         // Icon Setup
-        Main_Title_Logo_Label.setIcon(new ImageIcon("src/assets/img/Logo100px.png"));
+        BufferedImage bufferedImage = new ResourceManager().loadImage("/src/assets/img/Logo100px.png");
+
+
+        Main_Title_Logo_Label.setIcon(new ImageIcon(bufferedImage));
+
         // ActionListener
         Main_Files_Add_Button.addActionListener(new ActionListener() {
             @Override
