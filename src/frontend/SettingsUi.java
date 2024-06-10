@@ -7,14 +7,27 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The SettingsUi class is responsible for creating and managing the settings user interface.
+ * It extends JPanel and includes various UI components such as buttons, labels, and text fields
+ * to display and edit settings like IP address and port number.
+ */
 public class SettingsUi extends JPanel {
     private Ui ui;
 
+    /**
+     * Constructs a new SettingsUi with the specified Ui object.
+     *
+     * @param ui the Ui object that contains shared resources and methods
+     */
     public SettingsUi(Ui ui) {
         this.ui = ui;
         initComponents();
     }
 
+    /**
+     * Initializes and sets up the components of the settings UI.
+     */
     private void initComponents() {
         setLayout(new BorderLayout());
         setBackground(Ui.BACKGROUND);
