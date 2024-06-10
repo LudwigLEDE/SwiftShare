@@ -1,10 +1,9 @@
 package src.backend;
 
-import src.testumgebung.Sender;
-
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 //Ports die wir nutzen: 50000, 50001, 50002
 public class SenderServer { // FileOwnerServer
 
