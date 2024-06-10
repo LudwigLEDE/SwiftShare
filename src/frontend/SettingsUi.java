@@ -39,7 +39,7 @@ public class SettingsUi extends JPanel {
         // Font
         try {
             // Load the custom font from a file
-            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/font/ttf/Involve-Regular.ttf"));
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/font/Involve-Regular.ttf"));
             font = font.deriveFont(24f); // Set font size to 24 pixels
             Settings_Title_Label.setFont(font);
         } catch (FontFormatException e) {

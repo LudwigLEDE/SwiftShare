@@ -13,7 +13,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -79,6 +78,8 @@ public class Ui extends JFrame {
         setTitle("Swift Share");
         setResizable(false);
 
+
+        /*
         // Font Setup
         try {
             // Load the custom font from a file
@@ -90,6 +91,11 @@ public class Ui extends JFrame {
         } catch (IOException e) {
             System.err.println("UI:Could not read the font file.");
         }
+
+        */
+
+        // Font Setup
+        Main_Title_Label.setFont(ResourceManager.loadCustomFont("/src/assets/font/Involve-Regular.ttf", 40));
 
         // Icon Setup
         BufferedImage bufferedImage = new ResourceManager().loadImage("/src/assets/img/Logo100px.png");
