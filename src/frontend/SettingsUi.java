@@ -1,5 +1,7 @@
 package src.frontend;
 
+import src.assets.ResourceManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -37,16 +39,7 @@ public class SettingsUi extends JPanel {
         JLabel Settings_Title_Label = new JLabel("Settings", SwingConstants.CENTER);
 
         // Font
-        try {
-            // Load the custom font from a file
-            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/font/Involve-Regular.ttf"));
-            font = font.deriveFont(24f); // Set font size to 24 pixels
-            Settings_Title_Label.setFont(font);
-        } catch (FontFormatException e) {
-            System.err.println("UI: Invalid font format.");
-        } catch (IOException e) {
-            System.err.println("UI: Could not read the font file.");
-        }
+        Settings_Title_Label.setFont(ResourceManager.loadCustomFont("/src/assets/font/Involve-Regular.ttf", 30));
 
         // Panel for the back button
         JPanel Settings_Back_Panel = new JPanel(new BorderLayout());
