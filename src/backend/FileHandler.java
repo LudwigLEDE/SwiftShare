@@ -1,5 +1,7 @@
 package src.backend;
 
+import src.assets.ResourceManager;
+
 import java.io.*;
 import java.net.Socket;
 import javax.swing.JOptionPane;
@@ -9,9 +11,11 @@ public class FileHandler implements Runnable {
     public FileHandler(Socket clientSocket){
         this.clientSocket = clientSocket;
     }
+    public ResourceManager sound;
 
     public void run(){
         try {
+            sound.createSound("src/assets/sound/516867__pokeywokey__mail.wav");
             // Prompt the user to accept or reject the file
             if (confirmTransfer()) {
                 // If the user accepts, proceed with file transfer
