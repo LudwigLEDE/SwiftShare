@@ -1,8 +1,11 @@
+//Package
 package src.frontend;
 
+//File Imports
 import src.backend.DatenBank;
 import src.backend.Peer;
 import src.backend.FileHandler;
+
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -17,6 +20,10 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
+/**
+ * The Ui class represents the main user interface of the application.
+ * It provides the layout and functionality for user interaction with the application.
+ */
 public class Ui extends JFrame {
 
     // Components
@@ -60,6 +67,9 @@ public class Ui extends JFrame {
 
     public static int Port = 50000;
 
+    /**
+     * Constructs a new Ui instance and initializes the user interface components.
+     */
     public void anzeigen() {
 
         //Datenbank Laden
@@ -364,6 +374,11 @@ public class Ui extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Retrieves the IP address of the selected friend from the friends table.
+     *
+     * @return the IP address of the selected friend, or null if no friend is selected or an error occurs.
+     */
     public String getSelectedFriendIP() {
         int selectedRow = Main_Friends_Table.getSelectedRow();
         if (selectedRow != -1) {
@@ -373,6 +388,10 @@ public class Ui extends JFrame {
             return null; // No selection or error handling
         }
     }
+
+    /**
+     * Switches the current view to the settings view.
+     */
     public void settings(){
         Main_Background_Panel.remove(Main_Content_Panel);
         Main_Background_Panel.add(new SettingsUi(this), BorderLayout.CENTER);
@@ -380,7 +399,9 @@ public class Ui extends JFrame {
         Main_Background_Panel.repaint();
     }
 
-
+    /**
+     * Switches the current view back to the main view.
+     */
     public void back(){
         Main_Background_Panel.removeAll();
         Main_Background_Panel.add(Main_Title_Panel, BorderLayout.NORTH); // Re-add the title panel
@@ -389,6 +410,11 @@ public class Ui extends JFrame {
         Main_Background_Panel.repaint();
     }
 
+    /**
+     * Retrieves the IP address of the current machine.
+     *
+     * @return the IP address of the current machine, or a message indicating that the IP address could not be retrieved.
+     */
     public static String getIPAddress() {
         try {
             Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
