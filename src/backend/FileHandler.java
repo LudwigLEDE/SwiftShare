@@ -40,24 +40,29 @@ public class FileHandler implements Runnable {
             DataInputStream dis = new DataInputStream(is);
 
             // Read the length of the filename
-            int fileNameLength = dis.readInt();
-            byte[] fileNameBytes = new byte[fileNameLength];
-            dis.readFully(fileNameBytes);
-            String fileName = new String(fileNameBytes);
+            int numberOfFiles = dis.readInt();
+            for (int i = 0; i < numberOfFiles; i++)
+            {
+                byte[] fileNameBytes = new byte[numberOfFiles];
+                dis.readFully(fileNameBytes);
+                String fileName = new String(fileNameBytes);
 
-            // Read the file size
-            long fileSize = dis.readLong();
+                // Read the file size
+                long fileSize = dis.readLong();
 
-            File downloadsFolder = new File(System.getProperty("user.home"), "Downloads");
-            if (!downloadsFolder.exists()) {
-                downloadsFolder.mkdirs();
+                File downloadsFolder = new File(System.getProperty("user.home"), "Downloads");
+                if (!downloadsFolder.exists()) {
+                    downloadsFolder.mkdirs();
+                }
+
+                File file = new File(downloadsFolder, fileName);
+                saveFile(dis, file, fileSize);
+                System.out.println("File received and saved as " + file.getAbsolutePath());
             }
 
-            File file = new File(downloadsFolder, fileName);
-            saveFile(dis, file, fileSize);
 
             clientSocket.close();
-            System.out.println("File received and saved as " + file.getAbsolutePath());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
