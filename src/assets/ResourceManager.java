@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -38,6 +39,29 @@ public class ResourceManager {
             }
             return image1;
     }
+
+    public static Font loadCustomFont(String fontFileName, float size) {
+        Font customFont = null;
+        try {
+            // Load the font from the resource directory
+            InputStream is = ResourceManager.class.getResourceAsStream(fontFileName);
+            if (is != null) {
+                customFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(size);
+            } else {
+                System.err.println("Font file not found!");
+            }
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+
+        if (customFont == null) {
+            // Fallback to default font if custom font is not loaded
+            customFont = new Font("Serif", Font.PLAIN, (int) size);
+        }
+
+        return customFont;
+    }
+
     public Clip createSound(String filename)  {
 
         try {
