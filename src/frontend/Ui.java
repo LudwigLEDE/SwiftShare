@@ -248,7 +248,6 @@ public class Ui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 settings();
-
             }
         });
 

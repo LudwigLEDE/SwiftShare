@@ -7,11 +7,6 @@ import java.net.Socket;
 //Ports die wir nutzen: 50000, 50001, 50002
 public class SenderServer { // FileOwnerServer
 
-
-    private static final int SERVER_PORT = 50000;
-    private static final int SERVER_PORT_2 = 50001;
-    private static final int SERVER_PORT_3 = 50002;
-
     public static void start() {
         try {
             // Obtain the local host's IP address
@@ -22,8 +17,10 @@ public class SenderServer { // FileOwnerServer
             System.out.println("SenderServer: File owner's server IP address: " + serverIP);
 
             // Start the Server
-            ServerSocket serverSocket = new ServerSocket(50000); // Choose a port
-            System.out.println("SenderServer: File owner's server is running on port " + SERVER_PORT );
+            Options options = DatenBank.optionsLaden();
+
+            ServerSocket serverSocket = new ServerSocket(options.port); // Choose a port
+            System.out.println("SenderServer: File owner's server is running on port " + options.port );
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println(" SenderServer: Die Connection ist hergestellt");

@@ -10,8 +10,45 @@ import javax.swing.table.*;
  */
 public class DatenBank {
     static String dateiname = "DB.txt";
+    static String optionsname = "options.txt";
 
-    /**
+
+    public static void optionsSpeichern(Options options){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(optionsname))){
+            bw.write(options.username);
+            bw.write(";");
+            bw.write(options.port);
+            bw.write(";");
+            bw.write(String.valueOf(options.soundOn));
+            bw.newLine();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("DB new Port: " + options.port);
+
+    }
+    public static Options optionsLaden() {
+        try (BufferedReader br = new BufferedReader(new FileReader(optionsname))) {
+            String content = br.readLine();
+            if (content == null || content.isEmpty()){
+                //TODO: defaut Options zurück geben
+            }
+            String[] split = content.split(";");
+
+            String username = split[0];
+            int port = Integer.parseInt(split[1]);
+            Boolean soundOn = Boolean.valueOf(split[2]);
+
+            return new Options(soundOn, port, username);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+        /**
      * Saves the data from the provided {@code DefaultTableModel} into a file.
      * Each cell value is separated by a semicolon.
      *
