@@ -29,24 +29,30 @@ public class DatenBank {
 
     }
     public static Options optionsLaden() {
+        String defaultValues = "true;50000;User";
+        String content = null;
+
         try (BufferedReader br = new BufferedReader(new FileReader(optionsname))) {
-            String content = br.readLine();
-            if (content == null || content.isEmpty()){
-                //TODO: defaut Options zurück geben
-            }
-            String[] split = content.split(";");
-
-            String username = split[0];
-            int port = Integer.parseInt(split[1]);
-            Boolean soundOn = Boolean.valueOf(split[2]);
-
-            return new Options(soundOn, port, username);
-
+            content = br.readLine();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.err.println("File not found, using default values.");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error reading file, using default values.");
         }
+
+        // Use default values if the content is null or empty
+        if (content == null || content.isEmpty()) {
+            content = defaultValues;
+        }
+
+        String[] split = content.split(";");
+
+        // Assuming the order is boolean, int, string
+        Boolean soundOn = Boolean.valueOf(split[0]);
+        int port = Integer.parseInt(split[1]);
+        String username = split[2];
+
+        return new Options(soundOn, port, username);
     }
         /**
      * Saves the data from the provided {@code DefaultTableModel} into a file.

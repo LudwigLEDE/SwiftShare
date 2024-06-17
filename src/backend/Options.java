@@ -3,9 +3,9 @@ package src.backend;
 public class Options {
 
 
-    boolean soundOn;
+    public boolean soundOn;
     public int port;
-    String username;
+    public String username;
 
 
     public Options(boolean soundOn, int port, String username) {
