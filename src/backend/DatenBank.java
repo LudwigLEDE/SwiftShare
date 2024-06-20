@@ -17,7 +17,7 @@ public class DatenBank {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(optionsname))){
             bw.write(options.username);
             bw.write(";");
-            bw.write(options.port);
+            bw.write(String.valueOf(options.port));
             bw.write(";");
             bw.write(String.valueOf(options.soundOn));
             bw.newLine();
@@ -29,7 +29,7 @@ public class DatenBank {
 
     }
     public static Options optionsLaden() {
-        String defaultValues = "true;50000;User";
+        String defaultValues = "penis;50000;true";
         String content = null;
 
         try (BufferedReader br = new BufferedReader(new FileReader(optionsname))) {
