@@ -6,8 +6,8 @@ import src.backend.Options;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * The SettingsUi class is responsible for creating and managing the settings user interface.

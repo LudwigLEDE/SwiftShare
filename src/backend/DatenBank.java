@@ -1,8 +1,8 @@
 package src.backend;
 
-import java.io.*;
 import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import java.io.*;
 
 /**
  * The {@code DatenBank} class provides methods to save, load, and delete data from a file

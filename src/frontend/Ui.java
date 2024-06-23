@@ -2,15 +2,18 @@
 package src.frontend;
 
 //File Imports
+
+import src.assets.ResourceManager;
 import src.backend.DatenBank;
 import src.backend.Peer;
-import src.assets.ResourceManager;
-
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.InetAddress;
@@ -77,7 +80,7 @@ public class Ui extends JFrame {
         setSize(1280,   960);
         setTitle("Swift Share");
         setResizable(false);
-        
+
         // Font Setup
         Main_Title_Label.setFont(ResourceManager.loadCustomFont("/src/assets/font/Involve-Regular.ttf", 40));
 

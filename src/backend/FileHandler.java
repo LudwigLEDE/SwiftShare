@@ -2,9 +2,9 @@ package src.backend;
 
 import src.assets.ResourceManager;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
-import javax.swing.JOptionPane;
 
 public class FileHandler implements Runnable {
     private Socket clientSocket;
