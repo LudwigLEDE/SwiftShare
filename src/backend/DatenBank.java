@@ -15,10 +15,30 @@ public class DatenBank {
 
     public static void optionsSpeichern(Options options){
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(optionsname))){
-            bw.write(options.username);
+            if (options.port < 0 || options.port > 65535) {
+                System.out.println("Error: Port number is out of valid range.");
+                bw.write(50000);
+            }  else if (!isNumeric(String.valueOf(options.port))) {
+                System.out.println("Standart Port was used");
+                bw.write(50000);
+            } else {
+                bw.write(String.valueOf(options.port));
+            }
             bw.write(";");
-            bw.write(String.valueOf(options.port));
+
+            if (options.username == null) {
+                System.out.println("Error: Username is null.");
+                return;
+            } else {
+                bw.write(options.username);
+            }
             bw.write(";");
+
+            // Check if soundOn is a valid boolean value
+            if (!(options.soundOn == true || options.soundOn == false)) {
+                System.out.println("Error: SoundOn must be a boolean value.");
+                return;
+            }
             bw.write(String.valueOf(options.soundOn));
             bw.newLine();
 
@@ -26,10 +46,12 @@ public class DatenBank {
             throw new RuntimeException(e);
         }
         System.out.println("DB new Port: " + options.port);
-
+        System.out.println("DB new Username: " + options.username);
+        System.out.println("DB new Sound Bool: " + options.soundOn);
     }
+
     public static Options optionsLaden() {
-        String defaultValues = "penis;50000;true";
+        String defaultValues = "50000;User;true";
         String content = null;
 
         try (BufferedReader br = new BufferedReader(new FileReader(optionsname))) {
@@ -48,11 +70,11 @@ public class DatenBank {
         String[] split = content.split(";");
 
         // Assuming the order is boolean, int, string
-        Boolean soundOn = Boolean.valueOf(split[0]);
-        int port = Integer.parseInt(split[1]);
-        String username = split[2];
+        int port = Integer.parseInt(split[0]);
+        String username = split[1];
+        Boolean soundOn = Boolean.valueOf(split[2]);
 
-        return new Options(soundOn, port, username);
+        return new Options(port, username, soundOn);
     }
         /**
      * Saves the data from the provided {@code DefaultTableModel} into a file.
@@ -113,4 +135,17 @@ public class DatenBank {
             System.out.println("No row selected to delete.");
         }
     }
+
+    private static boolean isNumeric(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
 }

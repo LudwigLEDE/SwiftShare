@@ -8,9 +8,9 @@ public class Options {
     public String username;
 
 
-    public Options(boolean soundOn, int port, String username) {
-        this.soundOn = soundOn;
+    public Options( int port, String username ,boolean soundOn) {
         this.port = port;
         this.username = username;
+        this.soundOn = soundOn;
     }
 }

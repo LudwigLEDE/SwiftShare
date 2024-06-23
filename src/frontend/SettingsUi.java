@@ -179,7 +179,7 @@ public class SettingsUi extends JPanel {
                 Boolean newSound = Settings_Sound_CheckBox.isSelected();
 
 
-                DatenBank.optionsSpeichern(new Options(newSound,newPort,newUsername));
+                DatenBank.optionsSpeichern(new Options(newPort,newUsername,newSound));
 
             }
         });
