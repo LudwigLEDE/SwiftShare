@@ -77,23 +77,7 @@ public class Ui extends JFrame {
         setSize(1280,   960);
         setTitle("Swift Share");
         setResizable(false);
-
-
-        /*
-        // Font Setup
-        try {
-            // Load the custom font from a file
-            Font font = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/font/ttf/Involve-Regular.ttf"));
-            font = font.deriveFont(24f); // Set font size to 24 pixels
-            Main_Title_Label.setFont(font);
-        } catch (FontFormatException e) {
-            System.err.println("UI:Invalid font format.");
-        } catch (IOException e) {
-            System.err.println("UI:Could not read the font file.");
-        }
-
-        */
-
+        
         // Font Setup
         Main_Title_Label.setFont(ResourceManager.loadCustomFont("/src/assets/font/Involve-Regular.ttf", 40));
 

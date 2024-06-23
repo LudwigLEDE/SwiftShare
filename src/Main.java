@@ -3,6 +3,7 @@ package src;
 
 //Imports
 import src.backend.DatenBank;
+import src.backend.Options;
 import src.backend.Peer;
 import src.backend.SenderServer;
 import src.frontend.Ui;
@@ -15,5 +16,6 @@ public class Main {
             new Ui().anzeigen();
             SenderServer.start();
             new DatenBank();
+            DatenBank.optionsLaden();
     }
 }
