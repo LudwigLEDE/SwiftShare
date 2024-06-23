@@ -14,8 +14,10 @@ public class FileHandler implements Runnable {
     public ResourceManager sound;
 
     public void run(){
+
+        /*
         try {
-            sound.createSound("src/assets/sound/516867__pokeywokey__mail.wav");
+            //sound.createSound("src/assets/sound/516867__pokeywokey__mail.wav");
             // Prompt the user to accept or reject the file
             if (confirmTransfer()) {
                 // If the user accepts, proceed with file transfer
@@ -28,6 +30,9 @@ public class FileHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+         */
+
     }
     //Confirm wether you want to accept or deny the request for File transfering, and if yes, return yes.
     private boolean confirmTransfer() {
