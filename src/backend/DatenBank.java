@@ -17,9 +17,11 @@ public class DatenBank {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(optionsname))){
             if (options.port < 0 || options.port > 65535) {
                 System.out.println("Error: Port number is out of valid range.");
+                JOptionPane.showMessageDialog(null,"Port number is out of valid range. Port now used: 50000");
                 bw.write(50000);
             }  else if (!isNumeric(String.valueOf(options.port))) {
                 System.out.println("Standart Port was used");
+                JOptionPane.showMessageDialog(null, "Port input was not a number. Port now used: 50000");
                 bw.write(50000);
             } else {
                 bw.write(String.valueOf(options.port));
