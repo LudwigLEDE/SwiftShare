@@ -12,6 +12,7 @@ public class FileHandler implements Runnable {
         this.clientSocket = clientSocket;
     }
     public ResourceManager sound;
+    public long fileSize;
 
     public void run(){
         try {
@@ -54,9 +55,14 @@ public class FileHandler implements Runnable {
                 }
                 String fileName = new String(fileNameBytes);
 
-                // Read the file size
-                long fileSize = dis.readLong();
 
+                try {
+                    // Read the file size
+                    fileSize = dis.readLong();
+                }
+                catch (EOFException eof){
+                    System.out.println("WWOWOWOOWOWOW");
+                }
                 File downloadsFolder = new File(System.getProperty("user.home"), "Downloads");
                 if (!downloadsFolder.exists()) {
                     downloadsFolder.mkdirs();
