@@ -14,7 +14,6 @@ public class FileHandler implements Runnable {
     public ResourceManager sound;
 
     public void run(){
-
         try {
             //sound.createSound("src/assets/sound/516867__pokeywokey__mail.wav");
             // Prompt the user to accept or reject the file
@@ -29,7 +28,6 @@ public class FileHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
 
     }
@@ -48,7 +46,12 @@ public class FileHandler implements Runnable {
             for (int i = 0; i < numberOfFiles; i++)
             {
                 byte[] fileNameBytes = new byte[numberOfFiles];
-                dis.readFully(fileNameBytes);
+                try{
+                    dis.readFully(fileNameBytes);
+                }
+                catch (EOFException ex){
+                    System.out.println("End of file, thats ok");
+                }
                 String fileName = new String(fileNameBytes);
 
                 // Read the file size
