@@ -64,7 +64,7 @@ public class FileHandler implements Runnable {
                 System.out.println("File received and saved as " + file.getAbsolutePath());
             }
 
-
+            dis.close();
             clientSocket.close();
 
         } catch (IOException e) {
